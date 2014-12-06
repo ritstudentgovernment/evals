@@ -3,76 +3,81 @@ var ldap = Meteor.npmRequire('ldapjs'),
     Future = Npm.require('fibers/future'),
     LDAP = {};
 
-LDAP.checkAccount = function (options) {
+/* To enhance usability, we authenticate as quickly as possible
+ * and return to the client. User data can be scraped in later
+ * async calls.
+ */
+LDAP.quickAuth = function (options) {
+  var username = options.username.trim().toLowerCase();
+  LDAP.quickClient = ldap.createClient({url: 'ldaps://ldap.rit.edu'});
+  var exec = Meteor.sync(function (done) {
+    var bindDN = 'uid=' + username + ',ou=People,dc=rit,dc=edu';
+    LDAP.quickClient.bind(bindDN, options.password, function onQuickLDAPBind (err) {
+      done(err);
+    });
+  });
+  if (!exec.err) {
+    var query = {username: username};
+    Meteor.users.upsert(query, {$set: query});
+  }
+  return exec;
+};
 
-  /*
-   * The RIT LDAP load balancer seems to do an inadequate job as some nodes have consistently better
-   * performance over others (ordered from slowest to fastest):
+/* Only to be called iff a successful quickAuth occured.
+ * Scrapes LDAP information and adds it to our database.
+ */
+LDAP.getAccountMetadata = function (options) {
+  /* The RIT LDAP load balancer seems to do an inadequate job
+   * as some nodes have consistently better performance
+   * over others (ordered from slowest to fastest):
    * 10.12.2.8:389
    * 10.12.2.43:389
    * 10.12.2.40:389
    * 10.12.2.11:389
    * 10.12.2.10:389
    */
-
   LDAP.client = ldap.createClient({
     url: 'ldaps://10.12.2.11:636',
     tlsOptions: {
       rejectUnauthorized: false
     }
   });
-
-  console.log("starting to bind...");
-
+  var username = options.username.trim().toLowerCase();
+  var bindDN = 'MAIN\\' + username;
   return Meteor.sync(function (done) {
-    debugger;
-    LDAP.client.bind('MAIN\\' + options.username.trim().toLowerCase(), options.password, function (err) {
+    LDAP.client.bind(bindDN, options.password, function onLDAPBind (err) {
       if (err) {
-        console.log("[ERROR] when binding:");
-        console.log(err);
-        done(err, null);
+        done(err);
       } else {
+        var baseDN = 'ou=Users,ou=RITusers,dc=main,dc=ad,dc=rit,dc=edu';
         var opts = {
-          filter: 'uid=' + options.username.trim().toLowerCase(),
+          filter: 'uid=' + username,
           scope: 'sub',
           attributes: ['memberOf', 'sn', 'givenName', 'displayName', 'initials'],
           timeLimit: 10000
         };
-        console.log("starting to search...");
-        LDAP.client.search('ou=Users,ou=RITusers,dc=main,dc=ad,dc=rit,dc=edu', opts, function (err, res) {
+        LDAP.client.search(baseDN, opts, function onLDAPSearch (err, res) {
           if (err) {
-            console.log("[ERROR] when searching:");
-            done(err, null);
+            done(err)
           } else {
             res.on('searchEntry', function (entry) {
-              console.log("Entry recieved!");
-              done(null, entry.object);
+              done(err, entry.object);
             });
           }
         });
       }
     });
   });
-
-  return exec;
-
 };
 
-Accounts.registerLoginHandler('ldap', function (request) {
-  var user, userId;
-  console.log("checking account...")
-  exec = LDAP.checkAccount(request);
+LDAP.updateAccountMetadata = function (options, exec) {
   if (!exec.error) {
-    console.log("account check succeeded!");
-    user = Meteor.users.findOne({
-      username: request.username.trim().toLowerCase()
-    });
-    if (user) {
-      userId = user._id;
-    } else {
-      var name = (exec.result.givenName && exec.result.sn) ? exec.result.givenName + " " + exec.result.sn : null;
-      userId = Meteor.users.insert({
-        username: request.username.trim().toLowerCase(),
+    var name = (exec.result.givenName && exec.result.sn) ?
+      exec.result.givenName + " " + exec.result.sn : null;
+    var username = options.username.trim().toLowerCase();
+    Meteor.users.update(
+      {username: username},
+      {$set: {
         profile: {
           displayName: exec.result.displayName || null,
           givenName: exec.result.givenName || null,
@@ -80,13 +85,20 @@ Accounts.registerLoginHandler('ldap', function (request) {
           sn: exec.result.sn || null,
           name: name
         },
-        groups: exec.result.memberOf
-      });
-    }
-    return {
-      userId: userId
-    };
+        groups: exec.result.memberOf}
+      }
+    );
+  }
+}
+
+Accounts.registerLoginHandler('ldap', function (request) {
+  var username = request.username.trim().toLowerCase(),
+      auth = LDAP.quickAuth(request);
+  if (!auth.error) {
+    var user = Meteor.users.findOne({username: username});
+    Meteor.setTimeout(function() { LDAP.updateAccountMetadata(request, LDAP.getAccountMetadata(request)) }, 0);
+    return {userId: user._id};
   } else {
-    return {error: exec.error};
+    return {error: auth.error};
   }
 });
