@@ -7,4 +7,7 @@ meteor-platform
 http
 underscore
 iron:router
-
+accounts-base
+less
+meteorhacks:npm
+npm-container

@@ -7,7 +7,7 @@ if (Sections.find().count() === 0) {
     'http://schedule.csh.rit.edu/search/find',
     {
       headers: {accept: 'application/json'},
-      params: {term: 20145}
+      params: {term: 20141}
     },
     function (err, result) {
       if (err) {
