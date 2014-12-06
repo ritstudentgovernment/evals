@@ -6,4 +6,5 @@
 meteor-platform
 http
 underscore
+iron:router
 

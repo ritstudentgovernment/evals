@@ -1,0 +1,53 @@
+<template name="header">
+  <nav class="header-background navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{{pathFor 'index'}}">
+          RIT Course Evaluations
+        </a>
+        <button type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#nav-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="nav-collapse" style="border: 0;">
+        <ul class="nav navbar-nav navbar-right"> 
+          {{#if currentUser}}
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown">
+                 <span class="glyphicon glyphicon-user"></span>
+                 {{currentUser.profile.givenName}}
+                 <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a id="logout-button"
+                     href="#">
+                     <span class="glyphicon glyphicon-log-out"></span>
+                     Logout
+                  </a> 
+                </li>
+              </ul>
+            </li>
+          {{else}}
+            <li>
+              <a href="#loginModal"
+                 class="dropdown-toggle"
+                 data-toggle="modal">
+                 <span class="glyphicon glyphicon-user"></span>
+                 Login
+              </a>
+            </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>
