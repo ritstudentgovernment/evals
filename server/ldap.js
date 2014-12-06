@@ -15,7 +15,12 @@ LDAP.checkAccount = function (options) {
    * 10.12.2.10:389
    */
 
-  LDAP.client = ldap.createClient({url: 'ldap://10.12.2.10', port: 389});
+  LDAP.client = ldap.createClient({
+    url: 'ldaps://10.12.2.11:636',
+    tlsOptions: {
+      rejectUnauthorized: false
+    }
+  });
 
   console.log("starting to bind...");
 
