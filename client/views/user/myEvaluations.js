@@ -26,12 +26,6 @@ Template.myEvaluations.rendered = function () {
   });
 
   Deps.autorun(function () {
-    if (Meteor.user() && Meteor.user().sectionIds) {
-      Meteor.subscribe('mySections', Meteor.user().sectionIds);
-    } 
-  });
-
-  Deps.autorun(function () {
     if (!Meteor.user()) {
       $('#loginModal').modal();
     }

@@ -41,7 +41,7 @@
               <h4>Courses</h4>
             {{/if}}
             {{#each session 'searchCourses'}}
-              <a href="#">{{this.courseParentNum}} - {{this.title}}</a><br>
+              <a href="/courses/{{this.courseParentNum}}">{{this.courseParentNum}} - {{this.title}}</a><br>
             {{/each}}
 
             {{#if noResults}}

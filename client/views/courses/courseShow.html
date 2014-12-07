@@ -1,0 +1,9 @@
+<template name='courseShow'>
+  <div class="container">
+    <h2>{{course.title}} ({{course.courseParentNum}})</h2>
+    <h4>Taught by:</h4>
+    {{#each instructors}}
+      <a href="/professors/{{this}}">{{this}}</a><br>
+    {{/each}}
+  </div>
+</template>
