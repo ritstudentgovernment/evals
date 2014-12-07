@@ -5,10 +5,10 @@
     {{#if currentUser}}
       {{#if gte currentUser.reviewCount 2}}
       {{else}}
-        <div class="alert alert-warning">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
+        <div class="panel panel-body panel-default">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
       {{/if}}
     {{else}}
-      <div class="alert alert-warning">Login to see course evaluations.</div>
+      <div class="panel panel-body panel-default">Login to see course evaluations.</div>
     {{/if}}
     <h4>Teaches Courses</h4>
     {{#each sections}}
