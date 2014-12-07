@@ -14,6 +14,16 @@ if (Sections.find().count() === 0) {
         console.log(err);
       } else {
         result.data.forEach(function insertSection (section) {
+          try {
+            Courses.insert({
+              courseId: section.courseId,
+              courseParentNum: section.courseParentNum,
+              title: section.title
+            });
+          } catch (e) {}
+          try {
+            Instructors.insert({name: section.instructor});
+          } catch (e) {}
           Sections.insert(_.extend(section, {term: 20141}));
         });
       }
