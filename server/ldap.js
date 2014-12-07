@@ -70,6 +70,30 @@ LDAP.getAccountMetadata = function (options) {
   });
 };
 
+/* Inspects a user's LDAP groups and pulls section and term data.
+ * This data is then mapped to Section document ids.
+ */
+LDAP.getCourses = function (groups) {
+  var sectionIds = [],
+      regex = /(\d{4})-([a-zA-Z]+-\d{3}-\d{2})/;
+  groups.forEach(function (group) {
+    var results = regex.exec(group);
+    if (results && results.length == 3) {
+      var query = {
+        term: parseInt(results[1].substr(0, 1) + "0" + results[1].substr(1)),
+        courseNum: results[2]
+      };
+      console.log("query", query);
+      var section = Sections.findOne(query);
+      if (section) {
+        console.log("we got it");
+        sectionIds.push(section._id);
+      }
+    }
+  });
+  return sectionIds;
+}
+
 LDAP.updateAccountMetadata = function (options, exec) {
   if (!exec.error) {
     var name = (exec.result.givenName && exec.result.sn) ?
@@ -77,15 +101,17 @@ LDAP.updateAccountMetadata = function (options, exec) {
     var username = options.username.trim().toLowerCase();
     Meteor.users.update(
       {username: username},
-      {$set: {
-        profile: {
-          displayName: exec.result.displayName || null,
-          givenName: exec.result.givenName || null,
-          initials: exec.result.initials || null,
-          sn: exec.result.sn || null,
-          name: name
+      {
+        $set: {
+          profile: {
+            displayName: exec.result.displayName || null,
+            givenName: exec.result.givenName || null,
+            initials: exec.result.initials || null,
+            sn: exec.result.sn || null,
+            name: name
+          }
         },
-        groups: exec.result.memberOf}
+        $addToSet: {sectionIds: {$each: LDAP.getCourses(exec.result.memberOf)}}
       }
     );
   }

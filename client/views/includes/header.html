@@ -23,7 +23,7 @@
                  class="dropdown-toggle"
                  data-toggle="dropdown">
                  <span class="glyphicon glyphicon-user"></span>
-                 {{currentUser.profile.givenName}}
+                 {{or currentUser.profile.givenName currentUser.username}}
                  <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">

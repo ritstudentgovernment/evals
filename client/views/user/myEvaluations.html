@@ -1,9 +1,27 @@
 <template name="myEvaluations">
   <div class="container">
     {{#if currentUser}}
-        {{#if currentUser.courses}}
+        {{#if currentUser.sectionIds}}
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th>Instructor</th>
+                <th>Evaluation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each mySections}}
+                <tr>
+                  <td>{{ this.title }}</td>
+                  <td>{{ this.instructor }}</td>
+                  <td><button class="btn btn-sm btn-primary">Start Evaluation</button></td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
         {{else}}
-          <p class="lead">Hang tight as we pull your scheduling information. This should only take a couple of seconds...</p>
+          <p class="lead">Hang tight as we pull your schedule. This should only take about {{timer}} more seconds. Thanks for waiting!</p>
         {{/if}}
     {{else}}
       <div class="alert alert-info">

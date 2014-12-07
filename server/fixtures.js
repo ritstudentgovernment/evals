@@ -14,7 +14,7 @@ if (Sections.find().count() === 0) {
         console.log(err);
       } else {
         result.data.forEach(function insertSection (section) {
-          Sections.insert(_.extend(section, {term: 20145}));
+          Sections.insert(_.extend(section, {term: 20141}));
         });
       }
     }
