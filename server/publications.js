@@ -6,6 +6,23 @@ Meteor.publish('courseSections', function (courseParentNum) {
   return Sections.find({courseParentNum: courseParentNum});
 });
 
+Meteor.publish('instructor', function (name) {
+  return Instructors.find({name: name});
+});
+
+Meteor.publish('instructorSections', function (name) {
+  return Sections.find(
+    {
+      instructor: name
+    },
+    {$fields: {
+      title: 1,
+      courseParentNum: 1,
+      instructor: 1
+    }
+  });
+})
+
 Meteor.publish('sections', function () {
   return Sections.find();
 });

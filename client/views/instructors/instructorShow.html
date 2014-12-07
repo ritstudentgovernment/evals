@@ -1,19 +1,18 @@
-<template name='courseShow'>
+<template name="instructorShow">
   <div class="container">
-    <h2>{{course.title}} ({{course.courseParentNum}})</h2>
-    <h4>Course Evaluations</h4>
+    <h2>{{instructor.name}}</h2>
+    <h4>Professor Evaluations</h4>
     {{#if currentUser}}
       {{#if gte currentUser.reviewCount 2}}
       {{else}}
         <div class="alert alert-warning">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
       {{/if}}
-
     {{else}}
       <div class="alert alert-warning">Login to see course evaluations.</div>
     {{/if}}
-    <h4>Course Taught by</h4>
-    {{#each instructors}}
-      <a href="/professors/{{this}}">{{this}}</a><br>
+    <h4>Teaches Courses</h4>
+    {{#each sections}}
+      <a href="/courses/{{this.courseParentNum}}">{{this.title}}</a><br>
     {{/each}}
   </div>
 </template>

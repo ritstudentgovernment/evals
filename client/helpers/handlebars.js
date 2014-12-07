@@ -9,3 +9,7 @@ Handlebars.registerHelper('session', function (input) {
 Handlebars.registerHelper('or', function (a, b) {
   return a ? a : b;
 });
+
+Handlebars.registerHelper('gte', function (a, b) {
+  return a >= b;
+});

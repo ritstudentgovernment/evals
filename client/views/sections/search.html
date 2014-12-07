@@ -34,7 +34,7 @@
               <h4>Professors</h4>
             {{/if}}
             {{#each session 'searchInstructors'}}
-              <a href="#">{{this.name}}</a><br>
+              <a href="/professors/{{this.name}}">{{this.name}}</a><br>
             {{/each}}
 
             {{#if session 'searchCourses'}}
