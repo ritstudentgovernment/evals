@@ -1,6 +1,35 @@
+Template.evaluationNew.events({
+  'submit form': function(e, template) {
+    e.preventDefault();
+    var evaluation = {
+      helpfulness: parseInt(template.find("input[name='helpfulness']")).value,
+      clarity: parseInt(template.find("input[name='clarity']")).value,
+      fairness: parseInt(template.find("input[name='fairness']")).value,
+      responsiveness: parseInt(template.find("input[name='responsiveness']")).value,
+      retakeInstructor: stringToBoolean(template.find("[name='retakeInstructor'].btn-group>.active>input").value),
+      instructorComments: template.find("textarea[name='instructorComments']").value,
+      attendance: stringToBoolean(template.find("[name='attendance'].btn-group>.active>input").value),
+      textbook: stringToBoolean(template.find("[name='textbook'].btn-group>.active>input").value),
+      textbookOld: stringToBoolean(template.find("[name='oldTextbook'].btn-group>.active>input").value),
+      retakeCourse: stringToBoolean(template.find("[name='retakeCourse'].btn-group>.active>input").value),
+      courseComments: template.find("textarea[name='courseComments']").value
+    }
+  }
+});
+
+var stringToBoolean = function (str) {
+  if (str == "true") {
+    return true;
+  } else if (str == "false") {
+    return false;
+  } else {
+    return undefined;
+  }
+}
+
 Template.evaluationNew.rendered = function () {
   $('*[data-toggle="tooltip"]').tooltip();
-  $('.helpfulness').slider({
+  $('input[name="helpfulness"]').slider({
     min: 0,
     max: 5,
     value: 0,
@@ -17,7 +46,7 @@ Template.evaluationNew.rendered = function () {
       return map[val];
     }
   });
-  $('.clarity').slider({
+  $('input[name="clarity"]').slider({
     min: 0,
     max: 5,
     value: 0,
@@ -34,7 +63,7 @@ Template.evaluationNew.rendered = function () {
       return map[val];
     }
   });
-  $('.fairness').slider({
+  $('input[name="fairness"]').slider({
     min: 0,
     max: 5,
     value: 0,
@@ -51,7 +80,7 @@ Template.evaluationNew.rendered = function () {
       return map[val];
     }
   });
-  $('.responsiveness').slider({
+  $('input[name="responsiveness"]').slider({
     min: 0,
     max: 5,
     value: 0,
