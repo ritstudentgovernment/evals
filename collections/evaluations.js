@@ -11,9 +11,9 @@
   *   retakeInstructor:   <boolean>    // if evaluator would re-take the instructor
   *   instructorComments: <string>     // evaluator comments about the instructor
   *   hours:              <integer>    // avg hours per week evaluator spent on course 
-  *   retakeCourse:       <boolean>    // if evaluator would re-take the course
   *   textbook:           <boolean>    // if textbook required for course
   *   oldTextbook:        <boolean>    // if an older textbook version is acceptable for course
+  *   retakeCourse:       <boolean>    // if evaluator would re-take the course
   *   courseComments:     <string>     // evaluator comments about the course
   * 
   * }

@@ -4,6 +4,9 @@
       <h2><small>Reviewing {{section.instructor}}'s</small><br>{{ section.title }} ({{section.courseParentNum}})</h2>
     </div>
     <div class="col-md-12">
+      <h2>Professor questions</h2>
+    </div>
+    <div class="col-md-12">
       <p><h3>How helpful was the professor?</h3></p>
       <p><input class="helpfulness" type="number"></p>
     </div>
@@ -20,7 +23,82 @@
       <p><input class="responsiveness" type="number"></p>
     </div>
     <div class="col-md-12">
+      <p><h3>Would you take another course with this professor?</h3></p>
+      <p>
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default">
+            <input type="radio" name="retakeInstructor" value="true"> Yes
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="retakeInstructor" value="false"> No
+          </label>
+        </div>
+      </p>
+    </div>
+    <div class="col-md-12">
+      {{>comments name="instructorComments" type="professor"}}
+    </div>
+
+    <div class="col-md-12">
+      <h2>Course questions</h2>
+    </div>
+    <div class="col-md-12">
+      <p><h3>Was attendance mandatory for this course?</h3></p>
+      <p>
+        {{>radioButtons name="attendance"}}
+      </p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>Was the textbook mandatory for this course?</h3></p>
+      <p>
+        {{>radioButtons name="textbook"}}
+      </p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>Was an older or international version of the textbook OK for this course?</h3></p>
+      <p>
+        {{>radioButtons name="oldTextbook" optional=true}}
+      </p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>Would you recommend this course to another student?</h3></p>
+      <p>
+        {{>radioButtons name="retakeCourse"}}
+      </p>
+    </div>
+    <div class="col-md-12">
+      {{>comments name="courseComments" type="course"}}
+    </div>
+    <div class="col-md-12">
       <input type="submit" class="btn btn-lg btn-default" value="Submit">
     </div>
   </div>
+</template>
+
+<template name="radioButtons">
+  <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default">
+      <input type="radio" name="{{name}}" value="true"> Yes
+    </label>
+    <label class="btn btn-default">
+      <input type="radio" name="{{name}}" value="false"> No
+    </label>
+    {{#if optional}}
+      <label class="btn btn-default">
+        <input type="radio" name="{{name}}" value="null"> Unsure
+      </label>
+    {{/if}}
+  </div>
+</template>
+
+<template name="comments">
+  <p><h3 data-toggle="tooltip" data-placement="top" data-original-title="This feedback is public. Leave no personally identifiable information in your comments. See our guidelines for more information.">Do you have any other comments on this {{type}}? <div class="glyphicon glyphicon-question-sign" style="zoom: 75%; padding-left: 5px;"></div></h3></p>
+    <p>
+      <textarea name="{{name}}"
+                class="form-group form-control input-lg"
+                maxlength="300"
+                placeholder="300 characters maximum. Leave no personally identifiable information in comments."
+                type="text"
+                rows="3"></textarea>
+    </p>
 </template>

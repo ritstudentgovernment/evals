@@ -1,4 +1,5 @@
 Template.evaluationNew.rendered = function () {
+  $('*[data-toggle="tooltip"]').tooltip();
   $('.helpfulness').slider({
     min: 0,
     max: 5,
