@@ -1,0 +1,26 @@
+<template name='evaluationNew'>
+  <div class="container">
+    <div class="col-md-12">
+      <h2><small>Reviewing {{section.instructor}}'s</small><br>{{ section.title }} ({{section.courseParentNum}})</h2>
+    </div>
+    <div class="col-md-12">
+      <p><h3>How helpful was the professor?</h3></p>
+      <p><input class="helpfulness" type="number"></p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>How clear was the professor, in lectures and instructions for assignments?</h3></p>
+      <p><input class="clarity" type="number"></p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>How fair was the professor in grading assignments?</h3></p>
+      <p><input class="fairness" type="number"></p>
+    </div>
+    <div class="col-md-12">
+      <p><h3>How responsive was the professor in returning graded work, e-mails, etc.?</h3></p>
+      <p><input class="responsiveness" type="number"></p>
+    </div>
+    <div class="col-md-12">
+      <input type="submit" class="btn btn-lg btn-default" value="Submit">
+    </div>
+  </div>
+</template>

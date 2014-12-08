@@ -27,6 +27,10 @@ Meteor.publish('sections', function () {
   return Sections.find();
 });
 
+Meteor.publish('sectionById', function (id) {
+  return Sections.find({id: id});
+});
+
 Meteor.publish('mySections', function () {
  if (this.userId) {
   var sectionIds = Meteor.users.findOne(this.userId).sectionIds;

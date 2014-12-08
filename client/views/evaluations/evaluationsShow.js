@@ -1,4 +1,4 @@
-Template.myEvaluations.helpers({
+Template.evaluationsShow.helpers({
   'timer': function () {
     return Session.get("time");
   },
@@ -7,7 +7,7 @@ Template.myEvaluations.helpers({
   }
 });
 
-Template.myEvaluations.rendered = function () {
+Template.evaluationsShow.rendered = function () {
 
   Session.set("time", 20);
   Deps.autorun(function () {
