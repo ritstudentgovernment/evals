@@ -18,6 +18,17 @@ body {
   background: @main-background !important;
 }
 
+::selection {
+  background: lighten(@brand-primary, 30%); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: lighten(@brand-primary, 30%); /* Gecko Browsers */
+}
+
 .btn-group {
   padding-left: 20px;
+}
+
+.no-margin {
+  margin: 0;
 }

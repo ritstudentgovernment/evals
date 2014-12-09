@@ -2,29 +2,33 @@
   <div class="container">
     {{#if currentUser}}
         {{#if currentUser.sectionIds}}
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Course Name</th>
-                <th>Instructor</th>
-                <th>Evaluation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each mySections}}
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
                 <tr>
-                  <td>{{ this.title }}</td>
-                  <td>{{ this.instructor }}</td>
-                  <td><a href="/evaluations/{{this.id}}" class="btn btn-sm btn-default">Start Evaluation</a></td>
+                  <th><h3>Course</h3></th>
+                  <th><h3>Instructor</h3></th>
+                  <th></th>
                 </tr>
-              {{/each}}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {{#each mySections}}
+                  <tr class="active">
+                    <td><h4>{{ this.title }}</h4></td>
+                    <td><h4>{{ this.instructor }}</h4></td>
+                    <td><a href="/evaluations/{{this.id}}"
+                           class="btn btn-default">
+                           Start Evaluation</a></td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
         {{else}}
-          <p class="lead">Hang tight as we pull your schedule. This should only take about {{timer}} more seconds. Thanks for waiting!</p>
+          <p class="lead">Hang tight as we pull your schedule. This should only take at most {{timer}} more seconds. Thanks for waiting!</p>
         {{/if}}
     {{else}}
-      <div class="alert alert-info">
+      <div class="panel panel-body panel-default">
         Please login to view your evaluations.
       </div>
     {{/if}}

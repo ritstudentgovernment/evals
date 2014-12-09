@@ -17,8 +17,14 @@
       </div>
       <div class="collapse navbar-collapse" id="nav-collapse" style="border: 0;">
         <ul class="nav navbar-nav navbar-left">
-          <li>
-            <a class="navbar-search" href="#">
+          <li class="{{ isActiveRoute 'evaluationsShow' }}">
+            <a href="{{pathFor 'evaluationsShow'}}">
+              <span class="glyphicon glyphicon-plus"></span>
+              Write a Review
+            </a>
+          </li>
+          <li class="{{ isActiveRoute 'search' }}">
+            <a class="navbar-search" href="{{pathFor 'search'}}">
               <span class="glyphicon glyphicon-search"></span>
               Search
             </a>

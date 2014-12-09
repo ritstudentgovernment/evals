@@ -1,57 +1,36 @@
 <template name="search">
-  <div class="modal fade"
-       id="modal-search"
-       tabindex="-1"
-       role="dialog"
-       aria-labelledby="myModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-dialog-fullscreen">
-      <div class="modal-content modal-content-fullscreen">
-        <form class="main">
-          <div class="modal-body" style="font-size: 16px;">
-            <button type="button"
-                    class="btn-lg close"
-                    data-dismiss="modal">
-              <span aria-hidden="true">
-                <div>×</div>
-              </span>
-              <span class="sr-only">Close</span>
-            </button>
-            <p class="footer-subtitle text-center">
-              Search by course name, course number, or instructor
-            </p>
-            
-            <div class="input-group input-search">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-              {{> esInput id="search" index="sections" class="form-control input-lg input-clear" placeholder="ex: Wine & Food Pairing I, SWEN-331, John Smith" }}
-            </div>
-
-            {{#if session 'waiting'}}
-              {{> loading}}
-            {{/if}}
-
-            {{#if session 'searchInstructors'}}
-              <h4>Professors</h4>
-            {{/if}}
-            {{#each session 'searchInstructors'}}
-              <a href="/professors/{{this.name}}">{{this.name}}</a><br>
-            {{/each}}
-
-            {{#if session 'searchCourses'}}
-              <h4>Courses</h4>
-            {{/if}}
-            {{#each session 'searchCourses'}}
-              <a href="/courses/{{this.courseParentNum}}">{{this.courseParentNum}} - {{this.title}}</a><br>
-            {{/each}}
-
-            {{#if noResults}}
-              <p class="footer-subtitle text-center" style="margin: 50px 0;">
-                No Results.
-              </p>
-            {{/if}}
-          </div>
-        </form>
+  <div class="container">  
+    <form class="main">
+        
+      <div class="input-group input-search">
+        {{> esInput id="search" index="sections" class="form-control input-lg input-clear" placeholder="ex: Wine & Food Pairing I, SWEN-331, John Smith" }}
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
       </div>
-    </div>
+
+      {{#if session 'waiting'}}
+        {{> loading}}
+      {{/if}}
+
+      {{#if session 'instructorsSearch'}}
+        <h4>Professors</h4>
+      {{/if}}
+      {{#each session 'instructorsSearch'}}
+        <h4 class="no-margin"><a href="/professors/{{this.name}}">{{this.name}}</a></h4>
+      {{/each}}
+
+      {{#if session 'coursesSearch'}}
+        <h4>Courses</h4>
+      {{/if}}
+      {{#each session 'coursesSearch'}}
+        <h4 class="no-margin"><a href="/courses/{{this.courseParentNum}}">{{this.courseParentNum}} - {{this.title}}</a></h4>
+      {{/each}}
+
+      {{#if noResults}}
+        <p class="footer-subtitle text-center" style="margin: 50px 0;">
+          No Results.
+        </p>
+      {{/if}}
+
+    </form>
   </div>
 </template>
