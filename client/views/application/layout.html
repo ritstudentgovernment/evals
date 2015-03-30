@@ -1,5 +1,10 @@
 <template name="layout">
-  {{> header}}
-  {{> yield}}
-  {{> login}}
+  <div id="wrap">
+    {{> header}}
+    {{> yield}}
+    {{#unless currentUser}}
+      {{> login}}
+    {{/unless}}
+  </div>
+  {{> footer}}
 </template>
