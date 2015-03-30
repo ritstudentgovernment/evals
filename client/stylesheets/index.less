@@ -1,0 +1,22 @@
+@import "_variables.less";
+
+.tile {
+  @media (max-width: @screen-xs-max) { height: 150px; }
+  @media (min-width: @screen-sm-min) { height: 175px; }
+  @media (min-width: @screen-md-min) { height: 200px; } 
+  @media (min-width: @screen-lg-min) { height: 200px; } 
+}
+
+.tile > .container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); 
+}
+
+.tile:nth-child(even) {
+  background: #fff;
+}
+
+.tile:nth-child(odd) {
+  background: #efefef;
+}

@@ -1,13 +1,22 @@
 <template name="index">
-  <div class="container">
-    <h1 class="page-header">A review system that works for everyone.</h1>
-    <p class="lead">Just write 2 reviews to gain access to search <strong><u>all</u></strong> evaluation data.</p>
-    <h3><strong>Fast, Simple Reviews</strong></h3>
-    <p class="lead">We've restricted the number of questions asked to keep it quick and painless.</p>
-    <h3><strong>Choose Courses with Confidence</strong></h3>
-    <p class="lead">Pick your courses smarter by finding faculty members that best compliment your learning style.</p>
-    <h3><strong>Secure and Confidential</strong></h3>
-    <p class="lead">Communication with this server is encypted and your personal information is never shared at anytime in the evaluation process.</p>
-    <p><a href="{{pathFor 'evaluationsShow'}}" class="btn btn-lg btn-primary">Review your courses</a></p>
+  <div class="tiles">
+    <div class="tile">
+      <div class="container text-center">
+        <h1 class="page-header text-center">A review system that works for everyone.</h1>
+      </div>
+    </div>
+    {{#each tiles}}
+      <div class="tile">
+        <div class="container">
+          <h3><strong>{{ title }}</strong></h3>
+          <p class="lead">{{ description }}</p>
+        </div>
+      </div>
+    {{/each}}
+    <div class="tile">
+      <div class="container text-center">
+        <p><a href="{{pathFor 'evaluationsShow'}}" class="btn btn-lg btn-primary">Review your courses</a></p>
+      </div>
+    </div>
   </div>
 </template>
