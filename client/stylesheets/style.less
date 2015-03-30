@@ -1,34 +1,13 @@
-@import "_variables.less";
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200);
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300);
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+// Import Vendors
+@import "vendor/custom.bootstrap.mixins.import.less";
+@import "vendor/custom.bootstrap.import.less";
 
-* {
-  font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
-  -webkit-border-radius: 0 !important;
-     -moz-border-radius: 0 !important;
-          border-radius: 0 !important;
-}
+// Import Sites
+@import "sites/email.less";
+@import "sites/footer.less";
+@import "sites/header.less";
+@import "sites/index.less";
+@import "sites/loading.less";
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif; 
-}
-
-body {
-  background: @main-background !important;
-}
-
-::selection {
-  background: lighten(@brand-primary, 30%); /* WebKit/Blink Browsers */
-}
-::-moz-selection {
-  background: lighten(@brand-primary, 30%); /* Gecko Browsers */
-}
-
-.btn-group {
-  padding-left: 20px;
-}
-
-.no-margin {
-  margin: 0;
-}
+// Import Globals
+@import "global.less";
