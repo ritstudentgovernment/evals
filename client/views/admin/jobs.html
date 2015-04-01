@@ -1,0 +1,57 @@
+<template name="jobs">
+  {{> aboutJobs }}
+  {{#each jobs}}
+    {{> job}}
+  {{/each}}
+</template>
+
+<template name="aboutJobs">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">What are e-mail campaigns?</h3></div>
+    <div class="panel-body">
+      <p>E-mail campaigns send each RIT student an individualized message informing them of evaluation availablity.</p>
+      <form><button type="submit" class="btn btn-primary btn-lg btn-block">Create New Campaign</button></form>
+    </div>
+  </div>      
+</template>
+
+<template name="job">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title ellipsis">Campaign #{{_id}}
+        <span class="hidden-xs pull-right">
+          Status: {{status}}
+        </span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="text-right">
+        <form>
+          <button class="btn btn-default" type="submit">
+            Delete Campaign
+          </button>
+        </form>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Message</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each log}}
+              <tr>
+                <td>{{ level }}</td>
+                <td>{{ message }}</td>
+                <td>{{ jobLogTime time }}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>

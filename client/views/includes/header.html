@@ -41,6 +41,14 @@
                  <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
+                {{#if isInRole 'admin'}}
+                  <li>
+                    <a href="{{pathFor 'jobs'}}">
+                       <span class="glyphicon glyphicon-wrench"></span>
+                       Admin
+                    </a> 
+                  </li>
+                {{/if}}
                 <li>
                   <a id="logout-button"
                      href="#">

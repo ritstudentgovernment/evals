@@ -23,6 +23,15 @@ Meteor.publish('instructorSections', function (name) {
   });
 })
 
+Meteor.publish('jobs', function () {
+  if (Roles.userIsInRole(this.userId, ['admin'])) {
+    return Jobs.find();
+  } else {
+    this.stop();
+    return;
+  } 
+});
+
 Meteor.publish('sections', function () {
   return Sections.find();
 });

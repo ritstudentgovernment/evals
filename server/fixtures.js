@@ -30,3 +30,10 @@ if (Sections.find().count() === 0) {
     }
   );
 }
+
+// Initialize admin user
+
+if (Meteor.users.find().count() === 0) {
+  var adminUser = Meteor.users.insert({username: "sgweb"});
+  Roles.addUsersToRoles(adminUser, ['admin']);
+}

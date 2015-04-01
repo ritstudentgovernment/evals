@@ -12,7 +12,7 @@ Job.processJobs('jobs', 'sendEmail',
       }
     }, function (error, result) {
       if (error) {
-        job.log("An error occured accessing Elastic Search.", {level: 'danger', echo: true});
+        job.fail("An error occured accessing Elastic Search");
         callback();
       } else {
         sendEmail(result.data, job, callback);
@@ -23,7 +23,7 @@ Job.processJobs('jobs', 'sendEmail',
 
 function sendEmail (payload, job, callback) {
   async.eachLimit(payload.hits.hits, 5, emailUser, function (err) {
-    job.log("Job completed.", {level: 'info', echo: true});
+    err ? job.fail("An error occured sending e-mail") : job.done("Job done.");
     callback();
   });
 };
