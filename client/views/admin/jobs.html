@@ -18,11 +18,16 @@
 <template name="job">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title ellipsis">Campaign #{{_id}}
+      <h3 class="panel-title ellipsis">Campaign #{{_id}} ({{progress.percent}}% Done)
         <span class="hidden-xs pull-right">
           Status: {{status}}
         </span>
       </h3>
+    </div>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="{{progress.percent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress.percent}}%">
+        <span class="sr-only">{{progress.percent}}% Complete</span>
+      </div>
     </div>
     <div class="panel-body">
       <div class="text-right">
