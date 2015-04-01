@@ -1,10 +1,14 @@
 @import "variables.import.less";
 
 .tile {
-  @media (max-width: @screen-xs-max) { height: 150px; }
+  @media (max-width: @screen-xs-max) { height: 175px; }
   @media (min-width: @screen-sm-min) { height: 175px; }
   @media (min-width: @screen-md-min) { height: 200px; } 
   @media (min-width: @screen-lg-min) { height: 200px; } 
+}
+
+.tile:first-child {
+  margin-top: -@navbar-margin-bottom;
 }
 
 .tile > .container {
