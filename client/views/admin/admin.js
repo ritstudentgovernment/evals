@@ -1,6 +1,10 @@
 var pages = [{
   route: "jobs",
   label: "Email Campaigns"
+},
+{
+  route: "datafeed",
+  label: "Data Feed"
 }];
 
 Template.admin.helpers({
