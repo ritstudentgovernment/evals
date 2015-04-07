@@ -1,14 +1,21 @@
 @import "variables.import.less";
 
-.tile {
-  @media (max-width: @screen-xs-max) { height: 175px; }
-  @media (min-width: @screen-sm-min) { height: 175px; }
-  @media (min-width: @screen-md-min) { height: 200px; } 
-  @media (min-width: @screen-lg-min) { height: 200px; } 
+.carousel-title {
+  font-weight: 600;
+  background-color: @brand-primary;
+  padding: 15px;
+  line-height: 38px;
+  overflow: hidden;
+  margin: 0;
 }
 
-.tile:first-child {
-  margin-top: -@navbar-margin-bottom;
+.glyphicon-padding {
+  padding-left: 5px;
+  top: 2px;
+}
+
+.tile {
+  height: 225px;
 }
 
 .tile > .container {
@@ -23,4 +30,14 @@
 
 .tile:nth-child(odd) {
   background: #fff;
+}
+
+.tile:first-child {
+  color: white;
+  font-weight: 600;
+  background: url('/images/carousel.jpg') 50% 50% / cover no-repeat;
+  @media (max-width: @screen-xs-max) { height: 350px; }
+  @media (min-width: @screen-sm-min) { height: 350px; }
+  @media (min-width: @screen-md-min) { height: 400px; } 
+  @media (min-width: @screen-lg-min) { height: 400px; } 
 }

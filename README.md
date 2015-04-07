@@ -10,4 +10,9 @@ Usage (Local Development)
 - Copy `settings.json.sample` to `settings.json` and edit appropriately.
 - From the root directory, run `meteor --settings settings.json`.
 
+License
+=======
+
+MIT
+
 [Meteor]:https://www.meteor.com/

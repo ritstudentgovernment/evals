@@ -2,28 +2,19 @@
   <div class="page container">
     {{#if currentUser}}
         {{#if currentUser.sectionIds}}
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th><h3>Course</h3></th>
-                  <th><h3>Instructor</h3></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each mySections}}
-                  <tr class="active">
-                    <td><h4>{{ this.title }}</h4></td>
-                    <td><h4>{{ this.instructor }}</h4></td>
-                    <td><a href="/evaluations/{{this.id}}"
-                           class="btn btn-default">
-                           Start Evaluation</a></td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
+          <h2 class="no-margin square-padding">My Courses</h2>
+          {{#each mySections}}
+            <div class="square col-xs-12 col-sm-6 col-md-4 col-lg-3 {{ evaluationStatus }}">
+              <div class="square-content">
+                <h4>{{ instructor }}'s</h4>
+                <h3>
+                  <a href="/evaluations/{{this.id}}">
+                    {{ this.title }}
+                  </a>
+                </h3>
+              </div>
+            </div>
+          {{/each}}
         {{else}}
           <div class="panel panel-body panel-default">
             You don't have any courses to review.
