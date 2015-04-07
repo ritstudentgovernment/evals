@@ -24,3 +24,10 @@ body {
 .no-margin {
   margin: 0;
 }
+
+.page {
+  @media (max-width: @screen-xs-max) { margin: 10px inherit; }
+  @media (min-width: @screen-sm-min) { margin: 10px inherit; }
+  @media (min-width: @screen-md-min) { margin: 20px inherit; } 
+  @media (min-width: @screen-lg-min) { margin: 20px inherit; } 
+}

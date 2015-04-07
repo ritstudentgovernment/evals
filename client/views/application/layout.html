@@ -2,9 +2,7 @@
   <div id="wrap">
     {{> header}}
     {{> yield}}
-    {{#unless currentUser}}
-      {{> login}}
-    {{/unless}}
+    {{> login}}
   </div>
   {{> footer}}
 </template>
