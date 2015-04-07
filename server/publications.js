@@ -52,5 +52,9 @@ Meteor.publish('mySections', function () {
 
 // Expose individual users' objects
 Meteor.publish(null, function() {
-  return Meteor.users.find({_id: this.userId});
+  return Meteor.users.find(this.userId, {fields: {
+    identity: 1,
+    sectionIds: 1,
+    reviewCount: 1
+  }});
 });

@@ -30,7 +30,7 @@ LDAP.updateAccountMetadata = function (username) {
     {username: username},
     {
       $set: {
-        profile: {
+        identity: {
           name: esUser['_source'].name || null,
           firstName: esUser['_source'].firstName || null,
           lastName: esUser['_source'].lastName || null
