@@ -3,6 +3,9 @@
     {{> header}}
     {{> yield}}
     {{> login}}
+    {{#if loggingIn}}
+      {{> loading}}
+    {{/if}}
   </div>
   {{> footer}}
 </template>

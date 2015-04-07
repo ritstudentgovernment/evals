@@ -6,7 +6,7 @@ Job.processJobs('jobs', 'sendEmail',
       data: {
         "query": {
           "query_string": {
-            "query": "_id:pam3961"
+            "query": "Mikitsh"
           }
         }
       }
@@ -27,12 +27,15 @@ function sendEmail (payload, job, callback) {
   var emailsSent = 0;
   async.eachSeries(payload.hits.hits, function (esUser, callback) {
     try {
-      Meteor.users.getSections(esUser);
-      Meteor.ssrEmail('reviewYourCourses', {
-        to: [Meteor.users.getESEmail(esUser)],
-        from: "sgnoreply@rit.edu",
-        subject: "It's time to review your courses.",
-      }, {esUser: esUser});
+      if (Meteor.users.getSections(esUser).length != 0) {
+        Meteor.ssrEmail('reviewYourCourses', {
+          to: [Meteor.users.getESEmail(esUser)],
+          from: "sgnoreply@rit.edu",
+          subject: "It's time to review your courses.",
+        }, {esUser: esUser});
+      } else {
+        throw Error("Not enrolled in any courses.");
+      }
       emailsSent++;
       job.progress(emailsSent, payload.hits.total);
     } catch (err) {
