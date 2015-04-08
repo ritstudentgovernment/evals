@@ -1,12 +1,12 @@
 Template.evaluationsShow.helpers({
   'mySections': function () {
-    return Sections.find().fetch();
+    return Sections.find({}, {sort: {title: 1}}).fetch();
   },
-  'evaluationStatus': function () {
+  'evaluationCompleted': function () {
     var query = {
       term: this.term,
       courseNum: this.courseNum,
       userId: Meteor.userId()};
-    return Evaluations.findOne(query) ? "evaluation-complete" : "";
+    return Evaluations.findOne(query) ? true : false;
   }
 });

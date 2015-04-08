@@ -52,7 +52,7 @@
         <div class="col-md-12">
           <p><h4>Was an older or international version of the textbook OK for this course?</h4></p>
           <p>
-            {{>radioButtons name="oldTextbook" optional=true}}
+            {{>radioButtons name="oldTextbook"}}
           </p>
         </div>
         <div class="col-md-12">
@@ -83,16 +83,14 @@
     <label class="btn btn-default">
       <input type="radio" value="false"> No
     </label>
-    {{#if optional}}
-      <label class="btn btn-default">
-        <input type="radio" value="null"> Unsure
-      </label>
-    {{/if}}
+    <label class="btn btn-default active">
+      <input type="radio" value="null"> Unsure
+    </label>
   </div>
 </template>
 
 <template name="comments">
-  <p><h4 data-toggle="tooltip" data-placement="top" data-original-title="This feedback is public. Leave no personally identifiable information in your comments. See our guidelines for more information.">Do you have any other comments on this {{type}}? <div class="glyphicon glyphicon-question-sign" style="zoom: 75%; padding-left: 5px;"></div></h4></p>
+  <p><h4 data-toggle="tooltip" data-placement="top" data-original-title="This feedback is visible to anyone that has completed 2 reviews. Leave no personally identifiable information in your comments. See our guidelines for more information.">Do you have any other comments on this {{type}}? <div class="glyphicon glyphicon-question-sign" style="zoom: 75%; padding-left: 5px;"></div></h4></p>
     <p>
       <textarea name="{{name}}"
                 class="form-group form-control input-lg"

@@ -2,17 +2,28 @@ Template.evaluationNew.events({
   'submit form': function(e, template) {
     e.preventDefault();
     var evaluation = {
-      helpfulness: parseInt(template.find("input[name='helpfulness']")).value,
-      clarity: parseInt(template.find("input[name='clarity']")).value,
-      fairness: parseInt(template.find("input[name='fairness']")).value,
-      responsiveness: parseInt(template.find("input[name='responsiveness']")).value,
+      helpfulness: parseInt(template.find("input[name='helpfulness']").value),
+      clarity: parseInt(template.find("input[name='clarity']").value),
+      fairness: parseInt(template.find("input[name='fairness']").value),
+      responsiveness: parseInt(template.find("input[name='responsiveness']").value),
       retakeInstructor: stringToBoolean(template.find("[name='retakeInstructor'].btn-group>.active>input").value),
       instructorComments: template.find("textarea[name='instructorComments']").value,
       attendance: stringToBoolean(template.find("[name='attendance'].btn-group>.active>input").value),
       textbook: stringToBoolean(template.find("[name='textbook'].btn-group>.active>input").value),
       textbookOld: stringToBoolean(template.find("[name='oldTextbook'].btn-group>.active>input").value),
       retakeCourse: stringToBoolean(template.find("[name='retakeCourse'].btn-group>.active>input").value),
-      courseComments: template.find("textarea[name='courseComments']").value
+      courseComments: template.find("textarea[name='courseComments']").value,
+      courseNum: this.section.courseNum,
+      term: this.section.term
+    }
+    if (confirm("Are you sure you want to submit this evaluation?")) {
+      Meteor.call('submitEvaluation', evaluation, function (err) {
+        if (err) {
+          throwError(err.reason);
+        } else {
+          Router.go('evaluationsShow');
+        }
+      });
     }
   }
 });

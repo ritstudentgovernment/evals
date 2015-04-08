@@ -4,13 +4,17 @@
         {{#if currentUser.sectionIds}}
           <h2 class="no-margin square-padding">My Courses</h2>
           {{#each mySections}}
-            <div class="square col-xs-12 col-sm-6 col-md-4 col-lg-3 {{ evaluationStatus }}">
+            <div class="square col-xs-12 col-sm-6 col-md-4 col-lg-3 {{#if evaluationCompleted}}evaluation-complete{{/if}}">
               <div class="square-content">
                 <h4>{{ instructor }}'s</h4>
                 <h3>
-                  <a href="/evaluations/{{this.id}}">
+                  {{#if evaluationCompleted}}
                     {{ this.title }}
-                  </a>
+                  {{else}}
+                    <a href="/evaluations/{{this.id}}">
+                      {{ this.title }}
+                    </a>
+                  {{/if}}
                 </h3>
               </div>
             </div>

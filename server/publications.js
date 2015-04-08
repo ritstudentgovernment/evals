@@ -41,13 +41,28 @@ Meteor.publish('sectionById', function (id) {
 });
 
 Meteor.publish('mySections', function () {
- if (this.userId) {
-  var sectionIds = Meteor.users.findOne(this.userId).sectionIds;
-  return Sections.find({_id: {$in: sectionIds}}, {limit: 100});
- } else {
-  this.stop();
-  return;
- }
+  if (this.userId) {
+    var sectionIds = Meteor.users.findOne(this.userId).sectionIds;
+    return Sections.find({_id: {$in: sectionIds}}, {limit: 100});
+  } else {
+    this.ready();
+  }
+});
+
+Meteor.publish('myEvaluations', function () {
+  if (this.userId) {
+    return Evaluations.find({userId: this.userId}, {fields: {
+      "courseNum": 1,
+      "term": 1,
+      "userId": 1
+    }});
+  } else {
+    this.ready();
+  }
+});
+
+Meteor.publish('singleton', function () {
+  return Singleton.find();
 });
 
 // Expose individual users' objects
