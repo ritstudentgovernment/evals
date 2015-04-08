@@ -1,5 +1,10 @@
 @import "variables.import.less";
 
+// Use with navbar-fixed-top
+body {
+  padding-top: 50px;
+}
+
 .navbar-default {
   .navbar-nav > .active > a,
   .navbar-nav > .active > a:hover,
@@ -7,7 +12,6 @@
     background: @main-background !important;
   }
   background: white !important;
-  border: 0;
   margin-bottom: 0;
   @media (min-width: 480px) { // @screen-sm-min 
     margin: 0;
