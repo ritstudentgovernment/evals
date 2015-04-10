@@ -1,9 +1,9 @@
 <template name="header">
-  <nav class="header-background navbar navbar-inverse" role="navigation">
+  <nav class="header-background navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="{{pathFor 'index'}}">
-          RIT Course Evaluations
+          OpenEvals
         </a>
         <button type="button"
                 class="navbar-toggle"
@@ -37,7 +37,7 @@
                  class="dropdown-toggle"
                  data-toggle="dropdown">
                  <span class="glyphicon glyphicon-user"></span>
-                 {{or currentUser.profile.givenName currentUser.username}}
+                 {{or currentUser.identity.firstName currentUser.username}}
                  <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">

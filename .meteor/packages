@@ -13,6 +13,7 @@ meteorhacks:npm
 npm-container
 matteodem:easy-search
 nemo64:bootstrap
+msavin:mongol
 vsivsi:job-collection
 peerlibrary:async
 meteorhacks:ssr
@@ -20,3 +21,5 @@ sacha:juice
 ashutosh:email-att
 alanning:roles
 mrt:moment
+aldeed:simple-schema
+aldeed:collection2
