@@ -1,0 +1,35 @@
+<template name="summaryBanner">
+  <div class="panel panel-default">
+    <div class="row hidden-xs hidden-sm">
+      <div class="col-md-3">
+        <div class="text-center summary-banner-score-box">
+          <div class="v-center"> <span class="summary-banner-score">{{sum}}</span></div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div><h1>{{title}}</h1></div>
+        <div><h5 style="color:#F36E21">{{groups}}</h5></div>
+        <div class="row hidden-sm">
+          <div class="col-md-6"><span class="summary-category">Helpfulness: {{helpful}}/5</span></div>
+          <div class="col-md-6"><span class="summary-category">Fairness: {{fair}}/5</span></div>
+          <div class="col-md-6"><span class="summary-category">Clarity: {{clear}}/5</span></div>
+          <div class="col-md-6"><span class="summary-category">Responsiveness: {{responsive}}/5</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="visible-xs-block visible-sm-block">
+      <div class="panel-heading">
+        <h1>{{title}}</h1>
+      </div>
+      <table class="table">
+        <tbody>
+        <tr class="info"><td>Overall</td><td>{{sum}}/5</td></tr>
+        <tr><td>Helpfulness</td><td>{{helpful}}/5</td></tr>
+        <tr><td>Fairness</td><td>{{fair}}/5</td></tr>
+        <tr><td>Clarity</td><td>{{clear}}/5</td></tr>
+        <tr><td>Responsiveness</td><td>{{responsive}}/5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

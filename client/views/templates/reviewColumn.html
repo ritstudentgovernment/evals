@@ -1,0 +1,45 @@
+<template name="reviewColumn">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">Reviews</h3></div>
+    <div class="panel-body">
+      {{#if twoColumns}}
+        <div class="row review-columns">
+          {{#each reviews}}
+            <div class="col-sm-6">
+              <div class="panel">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6"><span class="review-category">Helpfulness: {{this.helpful}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Fairness: {{this.fair}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Clarity: {{this.clear}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Responsiveness: {{this.responsive}}</span></div>
+                    <div class="col-xs-12">{{this.body}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="row">
+          {{#each reviews}}
+            <div class="col-sm-12">
+              <div class="panel">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6"><span class="review-category">Helpfulness: {{this.helpful}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Fairness: {{this.fair}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Clarity: {{this.clear}}</span></div>
+                    <div class="col-xs-6"><span class="review-category">Responsiveness: {{this.responsive}}</span></div>
+                    <div class="col-xs-12">{{this.body}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+
+  </div>
+</template>
