@@ -6,6 +6,9 @@
     {{#if loggingIn}}
       {{> loading}}
     {{/if}}
+    {{#if session 'waiting'}}
+      {{> loading}}
+    {{/if}}
     {{> errors}}
   </div>
   {{> footer}}

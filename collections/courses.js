@@ -6,7 +6,7 @@ if (Meteor.isServer)
 Courses.initEasySearch(
   [ 'courseId', 'courseParentNum', 'title'],
   {
-    'limit' : 50,
+    'limit' : 75,
     'use': 'mongo-db'
   }
 );
