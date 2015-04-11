@@ -10,3 +10,7 @@ Template.evaluationsShow.helpers({
     return Evaluations.findOne(query) ? true : false;
   }
 });
+
+Template.evaluationsShow.rendered = function () {
+  $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+};
