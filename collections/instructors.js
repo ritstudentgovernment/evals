@@ -6,7 +6,7 @@ if (Meteor.isServer)
 Instructors.initEasySearch(
   [ 'name' ],
   {
-    'limit' : 10,
+    'limit' : 25,
     'use': 'mongo-db'
   }
 );
