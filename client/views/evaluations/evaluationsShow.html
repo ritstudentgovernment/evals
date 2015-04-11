@@ -1,8 +1,87 @@
 <template name="evaluationsShow">
+
   <div class="page container">
     {{#if currentUser}}
+      <div class="visible-sm-block visible-xs-block hidden-md">
+        <div class="panel panel-default">
+          <div class="panel-heading text-left">
+            <div class="row">
+              <div class="col-xs-8 col-md-10">
+                <h2 >{{currentUser.profile.name}}</h2>
+              </div>
+              <div class="col-xs-4 col-md-2">
+                <h2>
+                  <div class="progress" data-toggle="tooltip"  title="You must review two courses to access reviews.">
+                    {{#if eq currentUser.reviewCount 0}}
+                      <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 4em;" >
+                        0/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                      </div>
+                    {{/if}}
+                    {{#if eq currentUser.reviewCount 1}}
+                      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                        1/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                      </div>
+                    {{/if}}
+                    {{#if gte currentUser.reviewCount 2}}
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                      {{currentUser.reviewCount}}/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                      </div>
+                    {{/if}}
+                  </div>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped">
+            <tbody>
+            {{#if currentUser.sectionIds}}
+              {{#each mySections}}
+                <tr>
+                  <td>
+                    {{#if evaluationCompleted}}
+                      {{title}}
+                    {{else}}
+                      <a href="{{pathFor "evaluationNew" sectionId=id}}">{{title}}</a>
+                    {{/if}}
+                  </td>
+                  <td>{{instructor}}</td>
+                </tr>
+              {{/each}}
+            {{else}}
+              <tr><td>No courses to evaluate.</td></tr>
+            {{/if}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="visible-md-block visible-lg-block hidden-sm hidden-xs">
+        <div class="row ">
+          <div class="col-md-9">
+            <h2 class="no-margin square-padding">{{currentUser.profile.name}}</h2>
+          </div>
+          <div class="col-md-3">
+            <h2 class="no-margin square-padding">
+              <div class="progress" data-toggle="tooltip"  title="You must review two courses to access reviews.">
+                {{#if eq currentUser.reviewCount 0}}
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 4em;">
+                    0/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                  </div>
+                {{/if}}
+                {{#if eq currentUser.reviewCount 1}}
+                  <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                    1/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                  </div>
+                {{/if}}
+                {{#if gte currentUser.reviewCount 2}}
+                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    {{currentUser.reviewCount}}/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+                  </div>
+                {{/if}}
+              </div>
+            </h2>
+          </div>
+        </div>
         {{#if currentUser.sectionIds}}
-          <h2 class="no-margin square-padding">My Courses</h2>
           {{#each mySections}}
             <div class="square col-xs-12 col-sm-6 col-md-4 col-lg-3 {{#if evaluationCompleted}}evaluation-complete{{/if}}">
               <div class="square-content">
@@ -24,10 +103,14 @@
             You don't have any courses to review.
           </div>
         {{/if}}
+      </div>
     {{else}}
       <div class="panel panel-body panel-default">
         Please login to view your evaluations.
       </div>
     {{/if}}
   </div>
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+  </script>
 </template>

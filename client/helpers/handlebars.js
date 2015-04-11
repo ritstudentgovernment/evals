@@ -26,3 +26,7 @@ Handlebars.registerHelper('or', function (a, b) {
 Handlebars.registerHelper('gte', function (a, b) {
   return a >= b;
 });
+
+Handlebars.registerHelper('eq', function (a, b) {
+  return a == b;
+});
