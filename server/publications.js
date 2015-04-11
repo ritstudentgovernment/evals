@@ -32,6 +32,15 @@ Meteor.publish('jobs', function () {
   } 
 });
 
+Meteor.publish('dataFeedJobs', function () {
+  if (Roles.userIsInRole(this.userId, ['admin'])) {
+    return DataFeedJobs.find();
+  } else {
+    this.stop();
+    return;
+  }
+});
+
 Meteor.publish('sections', function () {
   return Sections.find();
 });

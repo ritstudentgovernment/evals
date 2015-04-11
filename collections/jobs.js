@@ -7,7 +7,7 @@ if (Meteor.isServer) {
   Jobs.allow({
     // Grant full permission to any authenticated user
     admin: function (userId, method, params) {
-      return (userId ? true : false);
+      return Roles.userIsInRole(userId, ['admin']);
     }
   });
 }
@@ -20,6 +20,7 @@ Meteor.methods({
   deleteJob: function (id) {
     if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       Jobs.remove(id);
+      DataFeedJobs.remove(id);
     }
   }
 });
