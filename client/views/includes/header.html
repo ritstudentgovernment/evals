@@ -17,7 +17,7 @@
       </div>
       <div class="collapse navbar-collapse" id="nav-collapse" style="border: 0;">
         <ul class="nav navbar-nav navbar-left">
-          <li class="{{ isActiveRoute 'about' }}">
+          <li class="{{ isActiveRoute 'about' }}{{ isActiveRoute 'policies' }}{{ isActiveRoute 'privacy' }}{{ isActiveRoute 'technology' }}">
             <a href="{{pathFor 'about'}}">
               <span class="glyphicon glyphicon-info-sign"></span>
               About
