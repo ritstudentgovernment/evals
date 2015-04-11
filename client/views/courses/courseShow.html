@@ -1,19 +1,54 @@
-<template name='courseShow'>
+<template name="courseShow">
   <div class="container">
-    <h2>{{course.title}} ({{course.courseParentNum}})</h2>
-    <h4>Course Evaluations</h4>
     {{#if currentUser}}
       {{#if gte currentUser.reviewCount 2}}
+        {{> summaryBanner title=course.title groups=course.courseParentNum clear=course.clarity responsive=course.responsiveness helpful=course.helpfulness fair=course.fairness sum=course.score}}
+        <div class="row">
+          <div class="col-md-4">
+            {{> professorColumn instructorsCurrent=instructors}}
+          </div>
+          <div class="col-md-8">
+            {{> reviewColumn twoColumns=true reviews=reviews}}
+          </div>
+        </div>
       {{else}}
-        <div class="panel panel-body panel-default">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
+        <div class="alert alert-danger">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
+        {{> summaryBanner title=course.title groups=course.courseParentNum clear="?" responsive="?" helpful="?" fair="?" sum="?"}}
+        <div class="row">
+          <div class="col-md-4">
+            {{> professorColumn instructorsCurrent=instructors}}
+          </div>
+          <div class="col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Reviews</h3>
+              </div>
+              <div class="panel-body">
+                <div class="alert alert-danger">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
+              </div>
+            </div>
+          </div>
+        </div>
       {{/if}}
-
     {{else}}
-      <div class="panel panel-body panel-default">Login to see course evaluations.</div>
+      <div class="alert alert-danger">Log in to see course evaluations</div>
+      {{> summaryBanner title=course.title groups=course.courseParentNum clear="?" responsive="?" helpful="?" fair="?" sum="?"}}
+      <div class="row">
+        <div class="col-md-4">
+          {{> professorColumn instructorsCurrent=instructors}}
+        </div>
+        <div class="col-md-8">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Reviews</h3>
+            </div>
+            <div class="panel-body">
+              <div class="alert alert-danger">Log in to see course evaluations</div>
+            </div>
+          </div>
+        </div>
+      </div>
     {{/if}}
-    <h4>Course Taught by</h4>
-    {{#each instructors}}
-      <a href="/professors/{{this}}">{{this}}</a><br>
-    {{/each}}
+
   </div>
 </template>
