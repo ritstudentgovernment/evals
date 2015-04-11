@@ -1,4 +1,5 @@
 {
   "ELASTICSEARCH_ENDPOINT": "http://www.example.com/",
+  "COURSEDATA_ENDPOINT": "http://www.example.com/",
   "MAIL_URL": "smtp://username@main.ad.rit.edu:password@mymail.ad.rit.edu:587"
 }
