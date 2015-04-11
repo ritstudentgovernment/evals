@@ -8,7 +8,7 @@ function getSections (job, callback) {
   job.log("Requesting course data for term " + job.data.term + "...", {level: 'info', echo: true});
   HTTP.call(
     'POST',
-    'http://schedule.csh.rit.edu/search/find',
+    Meteor.settings.COURSEDATA_ENDPOINT + '/search/find',
     {
       headers: {accept: 'application/json'},
       params: {term: job.data.term}
@@ -66,12 +66,10 @@ function insertSections (job, callback, sections) {
 function getSectionType (section) {
   var regex = /[A-Z]+-[0-9]+[A-Z]*-[0-9]+(.)[0-9]+/;
   var matches = regex.exec(section.courseNum);
-  if (matches && matches[0] == "L") {
+  if (section.title.indexOf("Lab") != -1 || (matches && matches[1] == "L")) {
     return "Lab";
-  } else if (matches && matches[0] == "R") {
+  } else if (matches && matches[1] == "R") {
     return "Resuscitation";
-  } else if (section.title.indexOf("Lab") != -1) {
-    return "Lab";
   } else {
     return "Lecture";
   }
@@ -86,7 +84,7 @@ function getSectionType (section) {
 function getColleges(job, callback) {
   HTTP.call(
     'POST',
-    'https://schedule.csh.rit.edu/entity/getSchoolsForTerm',
+    Meteor.settings.COURSEDATA_ENDPOINT + '/entity/getSchoolsForTerm',
     {
       headers: {accept: 'application/json'},
       params: {term: job.data.term}
@@ -114,7 +112,7 @@ function insertColleges (job, callback, payload) {
 function getDepartmentsForCollege (job, callback, collegeId) {
   HTTP.call(
     'POST',
-    'https://schedule.csh.rit.edu/entity/getDepartments',
+    Meteor.settings.COURSEDATA_ENDPOINT + '/entity/getDepartments',
     {
       headers: {accept: 'application/json'},
       params: {term: job.data.term, school: collegeId}
