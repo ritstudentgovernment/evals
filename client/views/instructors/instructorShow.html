@@ -1,5 +1,5 @@
 <template name="instructorShow">
-  <div class="container">
+  <div class="page container">
     {{#if currentUser}}
       {{#if gte currentUser.reviewCount 2}}
         {{> summaryBanner title=instructor.name groups="" clear=instructor.clarity responsive=instructor.responsiveness helpful=instructor.helpfulness fair=instructor.fairness sum=instructor.score}}
