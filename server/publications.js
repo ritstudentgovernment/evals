@@ -103,8 +103,6 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
 
 Meteor.publish('instructorEvaluations', function (instructorName) {
   if (this.userId && !moreReviewsNeeded(this.userId)) {
-    var user = Meteor.user(this.userId);
-
     return Evaluations.find({instructorName: instructorName}, {
       fields: {
         "helpfulness": 1,

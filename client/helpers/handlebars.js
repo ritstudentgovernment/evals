@@ -24,6 +24,7 @@ Handlebars.registerHelper('pluralize', function (term, count) {
 });
 
 Handlebars.registerHelper('breaklines', function (text) {
+  if (!text) { return ""; }
   text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
   return new Handlebars.SafeString(text);
 });

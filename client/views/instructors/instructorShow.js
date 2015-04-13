@@ -29,6 +29,6 @@ Template.instructorShow.helpers({
         return _.pick(section, ['title', 'courseParentNum', 'instructor']);
       }
     );
-    return _.uniq(sections, function(section) { return section.courseParentNum; });
+    return _.sortBy(_.uniq(sections, function(section) { return section.courseParentNum; }), 'title');
   }
 });
