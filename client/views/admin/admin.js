@@ -5,6 +5,10 @@ var pages = [{
 {
   route: "datafeed",
   label: "Data Feed"
+},
+{
+  route: "globalSettings",
+  label: "Global Settings"
 }];
 
 Template.admin.helpers({

@@ -11,23 +11,7 @@
               </div>
               <div class="col-xs-4 col-md-2">
                 <h2>
-                  <div class="progress" data-toggle="tooltip"  title="You must review two courses to access reviews.">
-                    {{#if eq currentUser.reviewCount 0}}
-                      <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 4em;" >
-                        0/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                      </div>
-                    {{/if}}
-                    {{#if eq currentUser.reviewCount 1}}
-                      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:50%">
-                        1/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                      </div>
-                    {{/if}}
-                    {{#if gte currentUser.reviewCount 2}}
-                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                      {{currentUser.reviewCount}}/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                      </div>
-                    {{/if}}
-                  </div>
+                  {{ >progressBar reviewCount=evaluationCountForTerm }}
                 </h2>
               </div>
             </div>
@@ -61,23 +45,7 @@
           </div>
           <div class="col-md-3">
             <h2 class="no-margin square-padding">
-              <div class="progress" data-toggle="tooltip"  title="You must review two courses to access reviews.">
-                {{#if eq currentUser.reviewCount 0}}
-                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 4em;">
-                    0/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                  </div>
-                {{/if}}
-                {{#if eq currentUser.reviewCount 1}}
-                  <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:50%">
-                    1/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                  </div>
-                {{/if}}
-                {{#if gte currentUser.reviewCount 2}}
-                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                    {{currentUser.reviewCount}}/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
-                  </div>
-                {{/if}}
-              </div>
+              {{ >progressBar reviewCount=evaluationCountForTerm }}
             </h2>
           </div>
         </div>
@@ -109,5 +77,13 @@
         Please login to view your evaluations.
       </div>
     {{/if}}
+  </div>
+</template>
+
+<template name="progressBar">
+  <div class="progress" data-toggle="tooltip" title="You must review two courses for term {{singleton.evaluationTerm}} to access evaluation data.">
+    <div class="progress-bar {{#if eq reviewCount 0}}progress-bar-danger{{/if}} {{#if eq reviewCount 1}}progress-bar-warning{{/if}} {{#if gte reviewCount 2}}progress-bar-success{{/if}} progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      {{ reviewCount }}/2 <span class="glyphicon glyphicon-question-sign" style="top: 2px"></span>
+    </div>
   </div>
 </template>

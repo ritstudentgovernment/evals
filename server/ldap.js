@@ -18,7 +18,7 @@ LDAP.quickAuth = function (options) {
   });
   if (!exec.err) {
     var query = {username: username};
-    Meteor.users.upsert(query, {$set: query, $setOnInsert: { reviewCount: 0}});
+    Meteor.users.upsert(query, {$set: query, $setOnInsert: {evaluationCounts: [], sectionIds: []}});
   }
   return exec;
 };

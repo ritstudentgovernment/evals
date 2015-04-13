@@ -104,7 +104,16 @@ Meteor.methods({
 
     Evaluations.insert(evaluation);
 
-    Singleton.update({}, {$inc: {evaluationCount: 1}});
+    // Credit the user for their submission
+    // NOTE: This is implementation is not thread-safe and not scalable.
+    var evaluationTerm = Singleton.findOne().evaluationTerm;
+    // Increment existing evaluation term
+    Meteor.users.update({_id: user._id, "evaluationCounts.term": evaluationTerm},
+      {$inc: {"evaluationCounts.$.count": 1}});
+    // If none exists, make a new one.
+    Meteor.users.update({_id: user._id, "evaluationCounts.term": {$ne: evaluationTerm}},
+      {$addToSet: {evaluationCounts: {term: evaluationTerm, count: 1}}});
 
+    Singleton.update({}, {$inc: {evaluationCount: 1}});
   }
 });
