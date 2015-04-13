@@ -1,3 +1,42 @@
+Meteor.users.attachSchema(new SimpleSchema({
+  "evaluationCounts.$.term": {
+    type: Number
+  },
+  "evaluationCounts.$.count": {
+    type: Number
+  },
+  "identity.name": {
+    type: String
+  },
+  "identity.firstName": {
+    type: String
+  },
+  "identity.lastName": {
+    type: String
+  },
+  sectionIds: {
+    type: [String],
+    optional: true
+  },
+  // from meteor packages
+  username: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    optional: true
+  },
+  roles: {
+    type: [String],
+    optional: true
+  },
+  services: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  }
+}));
+
 Meteor.users.getESEmail = function (esUser) {
   var regex = /[a-zA-Z0-9]+/;
   var matches = regex.exec(esUser._id);

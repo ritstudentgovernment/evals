@@ -21,9 +21,10 @@ Template.evaluationNew.events({
         if (err) {
           throwError(err.reason);
         } else {
+          GAnalytics.event('evaluations', 'create', this.section.courseNum);
           Router.go('evaluationsShow');
         }
-      });
+      }.bind(this));
     }
   }
 });

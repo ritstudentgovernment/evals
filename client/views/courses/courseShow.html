@@ -1,5 +1,5 @@
 <template name="courseShow">
-  <div class="container">
+  <div class="page container">
     {{#if currentUser}}
       {{#if gte currentUser.reviewCount 2}}
         {{> summaryBanner title=course.title groups=course.courseParentNum clear=course.clarity responsive=course.responsiveness helpful=course.helpfulness fair=course.fairness sum=course.score}}

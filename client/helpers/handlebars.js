@@ -19,6 +19,10 @@ Handlebars.registerHelper('session', function (input) {
   return Session.get(input);
 });
 
+Handlebars.registerHelper('singleton', function () {
+  return Singleton.findOne();
+});
+
 Handlebars.registerHelper('or', function (a, b) {
   return a ? a : b;
 });

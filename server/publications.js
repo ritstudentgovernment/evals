@@ -77,8 +77,8 @@ Meteor.publish('singleton', function () {
 // Expose individual users' objects
 Meteor.publish(null, function() {
   return Meteor.users.find(this.userId, {fields: {
+    evaluationCounts: 1,
     identity: 1,
     sectionIds: 1,
-    reviewCount: 1
   }});
 });
