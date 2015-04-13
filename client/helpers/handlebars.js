@@ -19,6 +19,15 @@ Handlebars.registerHelper('session', function (input) {
   return Session.get(input);
 });
 
+Handlebars.registerHelper('pluralize', function (term, count) {
+  return count == 1 ? term : term + "s";
+});
+
+Handlebars.registerHelper('breaklines', function (text) {
+  text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+  return new Handlebars.SafeString(text);
+});
+
 Handlebars.registerHelper('singleton', function () {
   return Singleton.findOne();
 });

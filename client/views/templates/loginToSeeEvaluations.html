@@ -1,0 +1,11 @@
+<template name="loginToSeeEvaluations">
+  {{#if currentUser}}
+    {{#if moreReviewsNeeded}}
+      <div class="panel panel-default panel-body">
+        You only submitted {{ evaluationCountForTerm }} {{ pluralize 'evaluation' evaluationCountForTerm }} for term {{ singleton.evaluationTerm }}, but need to write 2 reviews to see evaluations.
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="panel panel-default panel-body">Log in to see evaluation data.</div>
+  {{/if}}
+</template>

@@ -15,6 +15,9 @@ var evaluationSchema = new SimpleSchema({
   courseNum: {
     type: String
   },
+  courseParentNum: {
+    type: String
+  },
   createdAt: {
     type: Number
   },
@@ -32,6 +35,9 @@ var evaluationSchema = new SimpleSchema({
     type: Number,
     min: 1,
     max: 5
+  },
+  instructorName: {
+    type: String
   },
   instructorComments: {
     type: String,
@@ -94,6 +100,8 @@ Meteor.methods({
       "fairness", "responsiveness", "retakeInstructor", "instructorComments",
       "attendance", "textbook", "textbookOld", "retakeCourse", "courseComments",
       "courseNum", "term"), {
+      courseParentNum: section.courseParentNum,
+      instructorName: section.instructor,
       createdAt: new Date().getTime(),
       userId: user._id
     });

@@ -1,0 +1,19 @@
+@import "variables.import.less";
+
+.review {
+  overflow: auto;
+  .glyphicon {
+    font-size: 1.3em;
+    color: lighten(@gray-light, 35%);
+  }
+}
+
+.review:not(:last-child) {
+  border-bottom: 1px solid #DDD;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.panel-body > .panel-body {
+  margin-bottom: 0;
+}

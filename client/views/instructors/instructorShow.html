@@ -1,54 +1,14 @@
 <template name="instructorShow">
   <div class="page container">
-    {{#if currentUser}}
-      {{#if gte currentUser.reviewCount 2}}
-        {{> summaryBanner title=instructor.name groups="" clear=instructor.clarity responsive=instructor.responsiveness helpful=instructor.helpfulness fair=instructor.fairness sum=instructor.score}}
-        <div class="row">
-          <div class="col-md-4">
-            {{> courseColumn sectionsCurrent=sections}}
-          </div>
-          <div class="col-md-8">
-            {{> reviewColumn twoColumns=true reviews=reviews}}
-          </div>
-        </div>
-      {{else}}
-        <div class="alert alert-danger">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
-        {{> summaryBanner title=instructor.name groups="" clear="?" responsive="?" helpful="?" fair="?" sum="?"}}
-        <div class="row">
-          <div class="col-md-4">
-            {{> courseColumn sectionsCurrent=sections}}
-          </div>
-          <div class="col-md-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Reviews</h3>
-              </div>
-              <div class="panel-body">
-                <div class="alert alert-danger">You have only written {{currentUser.reviewCount}}, but need to write 2 reviews to see evaluations.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      {{/if}}
-    {{else}}
-      <div class="alert alert-danger">Log in to see course evaluations</div>
-      {{> summaryBanner title=instructor.name groups="" clear="?" responsive="?" helpful="?" fair="?" sum="?"}}
-      <div class="row">
-        <div class="col-md-4">
-          {{> courseColumn sectionsCurrent=sections}}
-        </div>
-        <div class="col-md-8">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Reviews</h3>
-            </div>
-            <div class="panel-body">
-              <div class="alert alert-danger">Log in to see course evaluations</div>
-            </div>
-          </div>
-        </div>
+    {{> loginToSeeEvaluations }}
+    {{> summaryBanner title=instructor.name groups="" clear=clarity responsive=responsiveness helpful=helpfulness fair=fairness sum=cumulative}}
+    <div class="row">
+      <div class="col-md-4">
+        {{> courseColumn sectionsCurrent=sections}}
       </div>
-    {{/if}}
-
+      <div class="col-md-8">
+        {{> reviewColumn }}
+      </div>
+    </div>
   </div>
 </template>
