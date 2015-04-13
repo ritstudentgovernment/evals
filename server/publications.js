@@ -1,3 +1,13 @@
+function moreReviewsNeeded (userId) {
+  var singleton = Singleton.findOne(),
+      evaluationObj = _.find(Meteor.users.findOne(userId).evaluationCounts,
+    function (evaluationCount) {
+      return evaluationCount.term == singleton.evaluationTerm;
+    }
+  );
+  return evaluationObj ? evaluationObj.count < 2 : true;
+};
+
 Meteor.publish('course', function (courseParentNum) {
   return Courses.find({courseParentNum: courseParentNum});
 });
@@ -72,6 +82,40 @@ Meteor.publish('myEvaluations', function () {
 
 Meteor.publish('singleton', function () {
   return Singleton.find();
+});
+
+Meteor.publish('courseEvaluations', function (courseParentNum) {
+  if (this.userId && !moreReviewsNeeded(this.userId)) {
+    return Evaluations.find({courseParentNum: courseParentNum}, {
+      fields: {
+        "helpfulness": 1,
+        "clarity": 1,
+        "fairness": 1,
+        "responsiveness": 1,
+        "courseComments": 1,
+        "createdAt": 1,
+      }
+    });
+  } else {
+    this.ready();
+  }
+});
+
+Meteor.publish('instructorEvaluations', function (instructorName) {
+  if (this.userId && !moreReviewsNeeded(this.userId)) {
+    return Evaluations.find({instructorName: instructorName}, {
+      fields: {
+        "helpfulness": 1,
+        "clarity": 1,
+        "fairness": 1,
+        "responsiveness": 1,
+        "instructorComments": 1,
+        "createdAt": 1
+      }
+    });
+  } else {
+    this.ready();
+  }
 });
 
 // Expose individual users' objects
