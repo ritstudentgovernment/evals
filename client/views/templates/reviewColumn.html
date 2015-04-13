@@ -5,9 +5,13 @@
       {{> loginToSeeEvaluations }}
         <div class="row">
           <div class="col-sm-12">
-            {{#each evaluations}}
-              {{ >comment }}
-            {{/each}}
+            {{#if evaluations}}
+              {{#each evaluations}}
+                {{ >comment }}
+              {{/each}}
+            {{else}}
+              There are no reviews to show.
+            {{/if}}
           </div>
         </div>
     </div>
