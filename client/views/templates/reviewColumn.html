@@ -7,10 +7,13 @@
           <div class="col-sm-12">
             {{#if evaluations}}
               {{#each evaluations}}
-                {{ >comment }}
+                {{ >instructorComment }}
+                {{ >courseComment }}
               {{/each}}
             {{else}}
-              There are no reviews to show.
+              {{#unless moreReviewsNeeded}}
+                There are no reviews to show.
+              {{/unless}}
             {{/if}}
           </div>
         </div>
@@ -18,19 +21,31 @@
   </div>
 </template>
 
+<template name="instructorComment">
+  {{ #if instructorComments }}
+    {{ >comment evaluation=this comment=instructorComments }}
+  {{ /if }}
+</template>
+
+<template name="courseComment">
+  {{ #if courseComments }}
+    {{ >comment evaluation=this comment=courseComments }}
+  {{ /if }}
+</template>
+
 <template name="comment">
   <div class="review">
     <div class="col-xs-2">
       <div class="text-center">
-        <div class="glyphicon glyphicon-chevron-up"></div>
+        <div class="glyphicon glyphicon-chevron-up upvote {{ upvoteClass }}"></div>
         <br>
         <div class="glyphicon glyphicon-bullhorn"></div>
         <br>
-        <div class="glyphicon glyphicon-chevron-down" style="margin-left: -5px;"></div>
+        <div class="glyphicon glyphicon-chevron-down downvote {{ downvoteClass }}" style="margin-left: -5px;"></div>
       </div>
     </div>
     <div class="col-xs-10">
-      {{ breaklines instructorComments }}{{ breaklines courseComments }}
+      {{ breaklines comment }}
     </div>
   </div>
 </template>

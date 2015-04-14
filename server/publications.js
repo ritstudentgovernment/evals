@@ -93,6 +93,8 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
         "fairness": 1,
         "responsiveness": 1,
         "courseComments": 1,
+        "courseCommentsUpvotes": 1,
+        "courseCommentsDownvotes": 1,
         "createdAt": 1,
       }
     });
@@ -110,6 +112,8 @@ Meteor.publish('instructorEvaluations', function (instructorName) {
         "fairness": 1,
         "responsiveness": 1,
         "instructorComments": 1,
+        "instructorCommentsUpvotes": 1,
+        "instructorCommentsDownvotes": 1,
         "createdAt": 1
       }
     });

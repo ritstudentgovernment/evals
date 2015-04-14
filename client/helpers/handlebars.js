@@ -44,3 +44,21 @@ Handlebars.registerHelper('gte', function (a, b) {
 Handlebars.registerHelper('eq', function (a, b) {
   return a == b;
 });
+
+function getEvaluationObject () {
+  var singleton = Singleton.findOne();
+  return _.find(Meteor.user().evaluationCounts,
+    function (evaluationCount) {
+      return evaluationCount.term == singleton.evaluationTerm;
+    }
+  );
+};
+
+Handlebars.registerHelper('moreReviewsNeeded', function () {
+  var evaluationObj = getEvaluationObject();
+  if (evaluationObj) {
+    return evaluationObj.count < 2;
+  } else {
+    return true;
+  }
+});
