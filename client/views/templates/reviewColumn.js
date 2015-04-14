@@ -1,6 +1,26 @@
+function evaluationScore (evaluation) {
+  if (evaluation.courseCommentsUpvotes) {
+    return evaluation.courseCommentsUpvotes.length - evaluation.courseCommentsDownvotes.length;
+  } else {
+    return evaluation.instructorCommentsUpvotes.length - evaluation.instructorCommentsDownvotes.length;
+  }
+};
+
 Template.reviewColumn.helpers({
   evaluations: function () {
-    return Evaluations.find({$or: [{courseComments: {$exists: true}}, {instructorComments: { $exists: true }}]}).fetch();
+    // Sort by a comment's score, descending, then comment creation date, descending.
+    return Evaluations.find({
+      $or: [
+        {courseComments: {$exists: true}},
+        {instructorComments: { $exists: true }}
+      ]}).fetch().sort(function (a, b) {
+        return evaluationScore(a) > evaluationScore(b) ?
+          -1 : evaluationScore(a) < evaluationScore(b) ?
+          1 : a.createdAt > b.createdAt ?
+          -1 : a.createdAt < b.createdAt ?
+          1 : 0;
+      }
+    );
   },
   evaluationCreatedAt: function () {
     return new moment(this.createdAt).fromNow();
@@ -53,5 +73,8 @@ Template.comment.helpers({
     } else {
       return "";
     }
+  },
+  'score': function () {
+    return evaluationScore(this.evaluation);
   }
 });
