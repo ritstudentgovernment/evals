@@ -19,6 +19,7 @@
         </div>
     </div>
   </div>
+  {{ >reportCommentModal }}
 </template>
 
 <template name="instructorComment">
@@ -35,7 +36,7 @@
 
 <template name="comment">
   <div class="review">
-    <div class="col-xs-2">
+    <div class="col-xs-2 review-col">
       <div class="text-center">
         <div class="glyphicon glyphicon-chevron-up upvote {{ upvoteClass }}" style="left: 2px;"></div>
         <br>
@@ -43,8 +44,9 @@
         <div class="glyphicon glyphicon-chevron-down downvote {{ downvoteClass }}" style="left: -1px;"></div>
       </div>
     </div>
-    <div class="col-xs-10">
+    <div class="col-xs-10 review-col">
       {{ breaklines comment }}
+      <div class="pull-right review-report">{{ commentPostedAt }} · <span class="modal-link">Report</span></div>
     </div>
   </div>
 </template>

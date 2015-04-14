@@ -1,11 +1,25 @@
 @import "variables.import.less";
 
 .review {
+  display: table;
   overflow: auto;
+  width: 100%;
   .glyphicon {
     font-size: 1.3em;
     color: lighten(@gray-light, 35%);
   }
+}
+
+.review-col {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.review-report {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .review:not(:last-child) {

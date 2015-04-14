@@ -58,6 +58,9 @@ Template.instructorComment.events({
 });
 
 Template.comment.helpers({
+  'commentPostedAt': function () {
+    return new moment(this.evaluation.createdAt).fromNow(true);
+  },
   'upvoteClass': function () {
     if (_.contains(this.evaluation.courseCommentsUpvotes, Meteor.userId()) || 
         _.contains(this.evaluation.instructorCommentsUpvotes, Meteor.userId())) {
@@ -76,5 +79,12 @@ Template.comment.helpers({
   },
   'score': function () {
     return evaluationScore(this.evaluation);
+  }
+});
+
+Template.comment.events({
+  'click .modal-link': function (e, template) {
+    Session.set("reportEvaluation", this.evaluation);
+    $('.report-comment-modal').modal('show');
   }
 });
