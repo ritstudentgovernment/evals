@@ -11,7 +11,15 @@ function getSections (job, callback) {
     Meteor.settings.COURSEDATA_ENDPOINT + '/search/find',
     {
       headers: {accept: 'application/json'},
-      params: {term: job.data.term}
+      params: {
+        term: job.data.term,
+        college: "any",
+        department: "any",
+        level: "any",
+        online: true,
+        honors: true,
+        offCampus: true
+      }
     },
     function (err, result) {
       if (err) {
