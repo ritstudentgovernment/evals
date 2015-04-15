@@ -31,9 +31,9 @@ LDAP.updateAccountMetadata = function (username) {
     {
       $set: {
         identity: {
-          name: esUser['_source'].name || null,
-          firstName: esUser['_source'].firstName || null,
-          lastName: esUser['_source'].lastName || null
+          name: esUser['_source'] ? esUser['_source'].name : null,
+          firstName: esUser['_source'] ? esUser['_source'].firstName : null,
+          lastName: esUser['_source'] ? esUser['_source'].lastName : null
         }
       },
       $addToSet: {sectionIds: {$each: sectionIds}}
@@ -46,7 +46,8 @@ Accounts.registerLoginHandler('ldap', function (request) {
       auth = LDAP.quickAuth(request);
   if (!auth.error) {
     var user = Meteor.users.findOne({username: username});
-    LDAP.updateAccountMetadata(username);
+    // Load account metadata asynchronously
+    Meteor.setTimeout(function() { LDAP.updateAccountMetadata(username); }, 0);
     return {userId: user._id};
   } else {
     return {error: auth.error};

@@ -14,8 +14,10 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   sendEmail: function () {
-    var job = new Job(Jobs, 'sendEmail', {});
-    job.priority('normal').save();
+    if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+      var job = new Job(Jobs, 'sendEmail', {});
+      job.priority('normal').save();
+    }
   },
   deleteJob: function (id) {
     if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {

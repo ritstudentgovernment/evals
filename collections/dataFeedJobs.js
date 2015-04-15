@@ -23,8 +23,10 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   startDataFeed: function (payload) {
-    var job = new Job(DataFeedJobs, 'startDataFeed', payload);
-    job.priority('normal').save();
+    if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+      var job = new Job(DataFeedJobs, 'startDataFeed', payload);
+      job.priority('normal').save();
+    }
   },
   deleteDataFeedJob: function (id) {
     if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
