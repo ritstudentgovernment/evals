@@ -6,16 +6,20 @@ Meteor.users.attachSchema(new SimpleSchema({
     type: Number
   },
   "identity.name": {
-    type: String
+    type: String,
+    optional: true
   },
   "identity.firstName": {
-    type: String
+    type: String,
+    optional: true
   },
   "identity.lastName": {
-    type: String
+    type: String,
+    optional: true
   },
   sectionIds: {
     type: [String],
+    defaultValue: [],
     optional: true
   },
   // from meteor packages
@@ -47,17 +51,19 @@ Meteor.users.getESEmail = function (esUser) {
 Meteor.users.getSections = function (esUser) {
   var sections = [],
       regex = /rit-section-(\d+)-(\w+-\d+-\d+)-s/;
-  _.each(esUser._source.groups, function (group) {
-    var matches = regex.exec(group);
-    if (matches && matches[1] && matches[2]) {
-      var termCode = Meteor.getStdTermCode(matches[1]);
-      var sectionCode = matches[2];
-      var section = Sections.findOne({term: termCode, courseNum: sectionCode});
-      if (section) {
-        sections.push(section);
+  if (esUser && esUser._source) {
+    _.each(esUser._source.groups, function (group) {
+      var matches = regex.exec(group);
+      if (matches && matches[1] && matches[2]) {
+        var termCode = Meteor.getStdTermCode(matches[1]);
+        var sectionCode = matches[2];
+        var section = Sections.findOne({term: termCode, courseNum: sectionCode});
+        if (section) {
+          sections.push(section);
+        }
       }
-    }
-  });
+    });
+  }
   return sections;
 }
 
