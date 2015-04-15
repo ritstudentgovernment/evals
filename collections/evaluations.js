@@ -26,6 +26,19 @@ var evaluationSchema = new SimpleSchema({
     max: 300,
     optional: true
   },
+  courseCommentsUpvotes: {
+    type: [String],
+    defaultValue: [],
+    optional: true
+  },
+  courseCommentsDownvotes: {
+    type: [String],
+    defaultValue: [],
+    optional: true
+  },
+  courseCommentsHidden: {
+    type: Boolean
+  },
   fairness: {
     type: Number,
     min: 1,
@@ -43,6 +56,19 @@ var evaluationSchema = new SimpleSchema({
     type: String,
     max: 300,
     optional: true
+  },
+  instructorCommentsUpvotes: {
+    type: [String],
+    defaultValue: [],
+    optional: true
+  },
+  instructorCommentsDownvotes: {
+    type: [String],
+    defaultValue: [],
+    optional: true
+  },
+  instructorCommentsHidden: {
+    type: Boolean
   },
   responsiveness: {
     type: Number,
@@ -103,6 +129,8 @@ Meteor.methods({
       courseParentNum: section.courseParentNum,
       instructorName: section.instructor,
       createdAt: new Date().getTime(),
+      courseCommentsHidden: false,
+      instructorCommentsHidden: false,
       userId: user._id
     });
 
@@ -123,5 +151,56 @@ Meteor.methods({
       {$addToSet: {evaluationCounts: {term: evaluationTerm, count: 1}}});
 
     Singleton.update({}, {$inc: {evaluationCount: 1}});
+  }
+});
+
+Meteor.methods({
+  vote: function (payload) {
+    var user = Meteor.user();
+        add = {},
+        remove = {};
+
+    if (!user) {
+      throw new Meteor.Error(401, "You need to login to upvote.");
+    }
+
+    if (payload.voteType != "course" && payload.voteType != "instructor") {
+      throw new Meteor.Error(400, "Invalid request");
+    }
+
+    if (payload.actionType != "upvote" && payload.actionType != "downvote") {
+      throw new Meteor.Error(400, "Invalid request");
+    }
+
+    add[payload.voteType + "CommentsUpvotes"] = user._id;
+    remove[payload.voteType + "CommentsDownvotes"] = user._id;
+
+    Evaluations.update(payload.evaluationId, {
+      $addToSet: payload.actionType == "upvote" ? add : remove,
+      $pull: payload.actionType == "upvote" ? remove : add,
+    });
+  },
+  changeCommentVisibility: function (payload) {
+    var user = Meteor.user();
+
+    if (!user) {
+      throw new Meteor.Error(401, "You need to login to upvote.");
+    }
+
+    if (!Roles.userIsInRole(user, ['admin'])) {
+      throw new Meteor.Error(401, "You are not authorized to change a comment's visibility.");
+    }
+
+    if (payload.context != "course" && payload.context != "instructor") {
+      throw new Meteor.Error(400, "Invalid request");
+    }
+
+    var evaluation = Evaluations.findOne(payload.evaluationId);
+
+    var set = {};
+    set[payload.context + "CommentsHidden"] = !evaluation[payload.context + "CommentsHidden"];
+
+    Evaluations.update({_id: evaluation._id}, {$set: set});
+
   }
 });

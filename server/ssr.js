@@ -1,5 +1,6 @@
 Meteor.startup(function () {
   SSR.compileTemplate('reviewYourCourses', Assets.getText('reviewYourCourses.html'));
+  SSR.compileTemplate('newReport', Assets.getText('newReport.html'));
 
   var fs = Npm.require('fs');
   var cssName = _.find(Object.keys(WebAppInternals.staticFiles), function (fileName) { return /.css$/.test(fileName) });
@@ -13,6 +14,12 @@ Meteor.startup(function () {
     if (!emailOpts.attachmentOptions) {
       emailOpts.attachmentOptions = [];
     }
+    if (process.env.NODE_ENV != "production") {
+      emailOpts.to = "sgweb@rit.edu";
+      emailOpts.cc = "";
+      emailOpts.bcc = "";
+    }
+    emailOpts.from = "sgnoreply@rit.edu";
     emailOpts.attachmentOptions.push({
       fileName: "sg.png",
       contents: Assets.getBinary('sg.png'),

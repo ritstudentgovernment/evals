@@ -38,6 +38,13 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {{#if currentUser}}
+            {{ #each privilegedRoles }}
+            <li class="hidden-xs hidden-sm">
+              <p class="navbar-btn">
+                <span class="label label-primary" style="vertical-align: bottom;">{{ this }}</span>
+              </p>
+            </li>
+            {{ /each }}
             <li class="dropdown">
               <a href="#"
                  class="dropdown-toggle"

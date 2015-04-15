@@ -19,5 +19,8 @@ Template.loginToSeeEvaluations.helpers({
     } else {
       return true;
     }
+  },
+  unprivilegedUser: function () {
+    return !Roles.userIsInRole(Meteor.user(), ['admin']);
   }
 });
