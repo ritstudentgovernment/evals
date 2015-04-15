@@ -37,8 +37,7 @@ Meteor.publish('jobs', function () {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
     return Jobs.find();
   } else {
-    this.stop();
-    return;
+    this.ready();
   } 
 });
 
@@ -46,8 +45,7 @@ Meteor.publish('dataFeedJobs', function () {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
     return DataFeedJobs.find();
   } else {
-    this.stop();
-    return;
+    this.ready();
   }
 });
 
