@@ -66,7 +66,9 @@ function insertSections (job, callback, sections) {
 function getSectionType (section) {
   var regex = /[A-Z]+-[0-9]+[A-Z]*-[0-9]+(.)[0-9]+/;
   var matches = regex.exec(section.courseNum);
-  if (section.title.indexOf("Lab") != -1 || (matches && matches[1] == "L")) {
+  var sectionTypeRegex = /(Lab($|\s))/;
+  var sectionTypeMatches = sectionTypeRegex.exec(section.title);
+  if ((sectionTypeMatches && sectionTypeMatches[1] == "Lab") || (matches && matches[1] == "L")) {
     return "Lab";
   } else if (matches && matches[1] == "R") {
     return "Resuscitation";
