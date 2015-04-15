@@ -56,14 +56,20 @@ Meteor.users.getSections = function (esUser) {
       var matches = regex.exec(group);
       if (matches && matches[1] && matches[2]) {
         var termCode = Meteor.getStdTermCode(matches[1]);
-        var sectionCode = matches[2];
         /* 
-         * Use a regular expression to more loosely match the appropriate section a student
-         * is enrolled in, due to data format integration issues between the
+         * First attempt to match to find an exact match course.
+         */
+        var section = Sections.findOne({term: termCode, courseNum: matches[2]});
+        /* 
+         * If an exact match cannot be found, fall back on a regular expression
+         * to more loosely match the appropriate section a student is enrolled
+         * in, due to data format integration issues between the
          * `ELASTICSEARCH_ENDPOINT` and `COURSEDATA_ENDPOINT`.
          */
-        var sectionRegex = matches[2].split("-").join("").split("").join(".*");
-        var section = Sections.findOne({term: termCode, courseNum: {$regex: sectionRegex}});
+        if (!section) {
+          var sectionRegex = matches[2].split("-").join("").split("").join(".*");
+          section = Sections.findOne({term: termCode, courseNum: {$regex: sectionRegex}});
+        }
         if (section) {
           sections.push(section);
         }
