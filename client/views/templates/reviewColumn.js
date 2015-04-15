@@ -9,11 +9,18 @@ function evaluationScore (evaluation) {
 Template.reviewColumn.helpers({
   evaluations: function () {
     // Sort by a comment's score, descending, then comment creation date, descending.
-    return Evaluations.find({
-      $or: [
+    if (Roles.userIsInRole(Meteor.user(), 'admin')) {
+      var filter = {$or: [
         {courseComments: {$exists: true}},
         {instructorComments: { $exists: true }}
-      ]}).fetch().sort(function (a, b) {
+      ]};
+    } else {
+      var filter = {$or: [
+        {instructorCommentsHidden: false},
+        {courseCommentsHidden: false}
+      ]};
+    }
+    return Evaluations.find(filter).fetch().sort(function (a, b) {
         return evaluationScore(a) > evaluationScore(b) ?
           -1 : evaluationScore(a) < evaluationScore(b) ?
           1 : a.createdAt > b.createdAt ?
@@ -77,14 +84,20 @@ Template.comment.helpers({
       return "";
     }
   },
+  hidden: function () {
+    return this.evaluation.instructorCommentsHidden || this.evaluation.courseCommentsHidden;
+  },
   'score': function () {
     return evaluationScore(this.evaluation);
   }
 });
 
 Template.comment.events({
-  'click .modal-link': function (e, template) {
+  'click .report-comment': function (e, template) {
     Session.set("reportEvaluation", this.evaluation);
     $('.report-comment-modal').modal('show');
+  },
+  'click .toggle-comment-visibility': function (e, template) {
+    Meteor.call("changeCommentVisibility", {evaluationId: this.evaluation._id, context: this.context});
   }
 });

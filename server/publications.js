@@ -85,7 +85,7 @@ Meteor.publish('singleton', function () {
 });
 
 Meteor.publish('courseEvaluations', function (courseParentNum) {
-  if (this.userId && !moreReviewsNeeded(this.userId)) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
     return Evaluations.find({courseParentNum: courseParentNum}, {
       fields: {
         "helpfulness": 1,
@@ -95,7 +95,8 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
         "courseComments": 1,
         "courseCommentsUpvotes": 1,
         "courseCommentsDownvotes": 1,
-        "createdAt": 1,
+        "courseCommentsHidden": 1,
+        "createdAt": 1
       }
     });
   } else {
@@ -104,7 +105,7 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
 });
 
 Meteor.publish('instructorEvaluations', function (instructorName) {
-  if (this.userId && !moreReviewsNeeded(this.userId)) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
     return Evaluations.find({instructorName: instructorName}, {
       fields: {
         "helpfulness": 1,
@@ -114,6 +115,7 @@ Meteor.publish('instructorEvaluations', function (instructorName) {
         "instructorComments": 1,
         "instructorCommentsUpvotes": 1,
         "instructorCommentsDownvotes": 1,
+        "instructorCommentsHidden": 1,
         "createdAt": 1
       }
     });

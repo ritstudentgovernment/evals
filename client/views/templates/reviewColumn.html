@@ -24,13 +24,13 @@
 
 <template name="instructorComment">
   {{ #if instructorComments }}
-    {{ >comment evaluation=this comment=instructorComments }}
+    {{ >comment evaluation=this comment=instructorComments context="instructor" }}
   {{ /if }}
 </template>
 
 <template name="courseComment">
   {{ #if courseComments }}
-    {{ >comment evaluation=this comment=courseComments }}
+    {{ >comment evaluation=this comment=courseComments context="course" }}
   {{ /if }}
 </template>
 
@@ -46,7 +46,19 @@
     </div>
     <div class="col-xs-10 review-col">
       {{ breaklines comment }}
-      <div class="pull-right review-report">{{ commentPostedAt }} · <span class="modal-link">Report</span></div>
+      {{#if isInRole 'admin'}}
+        <div class="pull-right comment-hidden">
+          {{ #if hidden }}
+            <span class="glyphicon glyphicon-lock"></span>
+          {{ /if }}
+        </div>
+      {{/if}}
+      <div class="pull-right review-report">
+        {{ commentPostedAt }} · <span class="modal-link report-comment">Report</span>
+        {{ #if isInRole 'admin' }}
+          · <span class="modal-link toggle-comment-visibility">{{ #if hidden }}Show{{ else }}Hide{{ /if }}</span>
+        {{/if}}
+      </div>
     </div>
   </div>
 </template>

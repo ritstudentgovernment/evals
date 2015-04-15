@@ -35,6 +35,10 @@ Meteor.methods({
       userId: user._id
     });
 
+    if (Meteor.isServer) {
+      Meteor.ssrEmail('newReport', {to: "sgweb@rit.edu", subject: "[OpenEvals] Comment Reported"}, report);
+    }
+
     return Reports.insert(report);
   }
 });
