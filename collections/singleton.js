@@ -9,11 +9,18 @@ Singleton.schema = new SimpleSchema({
       type: "hidden"
     }
   },
+  evaluationTermFriendlyName: {
+    type: String,
+    label: "Current Evaluation Term Friendly Name. Used for display only. For example, enter 'Spring 2015'.",
+    autoform: {
+      placeholder: "Spring 2015"
+    }
+  },
   evaluationTerm: {
     type: Number,
     label: "Current Evaluation Term. Users need to evaluate 2 courses from this term to view evaluation data.",
     autoform: {
-      placeholder: "20141"
+      placeholder: "20145"
     }
   },
   version: {

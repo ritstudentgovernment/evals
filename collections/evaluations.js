@@ -2,105 +2,241 @@
 
 Evaluations = new Mongo.Collection('evaluations');
 
-var evaluationSchema = new SimpleSchema({
+Evaluations.schema = new SimpleSchema({
   attendance: {
     type: Boolean,
-    optional: true
+    label: "I attended this class regularly.",
+    autoform: {
+      afFieldInput: {
+        label: "I attended this class regularly."
+      }
+    }
   },
   clarity: {
     type: Number,
     min: 1,
-    max: 5
+    max: 5,
+    label: "The instructor communicated the course material clearly.",
+    autoform: {
+      class: "likert"
+    }
   },
   courseNum: {
-    type: String
+    type: String,
+    autoform: {
+      type: "hidden"
+    }
   },
   courseParentNum: {
-    type: String
+    type: String,
+    autoform: {
+      type: "hidden"
+    }
   },
   createdAt: {
-    type: Number
+    type: Number,
+    autoform: {
+      type: "hidden"
+    }
   },
   courseComments: {
     type: String,
     max: 300,
-    optional: true
+    optional: true,
+    label: "What was beneficial about this course? How could this course be improved?",
+    autoform: {
+      placeholder: "Comments are visible to other students. Leave no personally identifiable information in comments."
+    }
   },
   courseCommentsUpvotes: {
     type: [String],
     defaultValue: [],
-    optional: true
+    optional: true,
+    autoform: {
+      type: "hidden"
+    }
   },
   courseCommentsDownvotes: {
     type: [String],
     defaultValue: [],
-    optional: true
+    optional: true,
+    autoform: {
+      type: "hidden"
+    }
   },
   courseCommentsHidden: {
-    type: Boolean
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      type: "hidden"
+    }
+  },
+  effectiveness: {
+    type: Number,
+    min: 1,
+    max: 5,
+    label: "Overall, this instructor was an effective teacher.",
+    autoform: {
+      class: "likert"
+    }
+  },
+  enrollment: {
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      label: "Difficult to enroll in (few spaces)"
+    }
+  },
+  expensive: {
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      label: "Expensive (Books + Materials, etc. over $200)"
+    }
   },
   fairness: {
     type: Number,
     min: 1,
     max: 5
   },
+  groupWork: {
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      label: "Group projects"
+    }
+  },
   helpfulness: {
     type: Number,
     min: 1,
-    max: 5
+    max: 5,
+    label: "The instructor provided helpful feedback about my work in this course.",
+    autoform: {
+      class: "likert"
+    }
+  },
+  highValue: {
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      label: "Valuable to academic / career objectives"
+    }
   },
   instructorName: {
-    type: String
+    type: String,
+    autoform: {
+      type: "hidden"
+    }
   },
   instructorComments: {
     type: String,
     max: 300,
-    optional: true
+    optional: true,
+    label: "What did this instructor do well? How can this instructor improve?",
+    autoform: {
+      placeholder: "Comments are visible to other students. Leave no personally identifiable information in comments."
+    }
   },
   instructorCommentsUpvotes: {
     type: [String],
     defaultValue: [],
-    optional: true
+    optional: true,
+    autoform: {
+      type: "hidden"
+    }
   },
   instructorCommentsDownvotes: {
     type: [String],
     defaultValue: [],
-    optional: true
+    optional: true,
+    autoform: {
+      type: "hidden"
+    }
   },
   instructorCommentsHidden: {
-    type: Boolean
+    type: Boolean,
+    defaultValue: false,
+    autoform: {
+      type: "hidden"
+    }
+  },
+  organization: {
+    type: Number,
+    min: 1,
+    max: 5,
+    label: "The instructor presented the course material in an organized manner.",
+    autoform: {
+      class: "likert"
+    }
+  },
+  positivity: {
+    type: Number,
+    min: 1,
+    max: 5,
+    label: "The instructor established a positive learning environment.",
+    autoform: {
+      class: "likert"
+    }
   },
   responsiveness: {
     type: Number,
     min: 1,
-    max: 5
+    max: 5,
+    label: "The instructor provided helpful feedback about my work in this course.",
+    autoform: {
+      class: "likert"
+    }
   },
-  retakeCourse: {
+  recommendCourse: {
     type: Boolean,
-    optional: true
+    optional: true,
+    autoform: {
+      label: "Would recommend course to a friend"
+    }
   },
   retakeInstructor: {
     type: Boolean,
     optional: true
   },
+  supportiveness: {
+    type: Number,
+    min: 1,
+    max: 5,
+    label: "The instructor supported my progress towards achieving the course objectives.",
+    autoform: {
+      class: "likert"
+    }
+  },
   term: {
-    type: Number
+    type: Number,
+    autoform: {
+      type: "hidden"
+    }
   },
   textbook: {
     type: Boolean,
-    optional: true
+    optional: true,
+    autoform: {
+      label: "Textbook required"
+    }
   },
   textbookOld: {
     type: Boolean,
-    optional: true
+    optional: true,
+    autoform: {
+      label: "Old / International Textbook OK"
+    }
   },
   userId: {
     type: String,
     max: 80,
+    autoform: {
+      type: "hidden"
+    }
   }
 });
 
-Evaluations.attachSchema(evaluationSchema);
+Evaluations.attachSchema(Evaluations.schema);
 
 Meteor.methods({
   submitEvaluation: function (payload) {
@@ -122,21 +258,23 @@ Meteor.methods({
       throw new Meteor.Error(400, "You have already evaluated this course.");
     }
 
-    var evaluation = _.extend(_.pick(payload, "helpfulness", "clarity",
-      "fairness", "responsiveness", "retakeInstructor", "instructorComments",
-      "attendance", "textbook", "textbookOld", "retakeCourse", "courseComments",
-      "courseNum", "term"), {
+    var evaluation = _.extend(payload, {
+      courseNum: section.courseNum,
       courseParentNum: section.courseParentNum,
-      instructorName: section.instructor,
       createdAt: new Date().getTime(),
+      instructorName: section.instructor,
+      courseCommentsUpvotes: [],
+      courseCommentsDownvotes: [],
       courseCommentsHidden: false,
+      instructorName: section.instructor,
+      instructorCommentsUpvotes: [],
+      instructorCommentsDownvotes: [],
       instructorCommentsHidden: false,
+      term: section.term,
       userId: user._id
     });
 
-    if (!Match.test(evaluation, evaluationSchema)) {
-      throw new Meteor.Error(400, "This evaluation submission is invalid.");
-    }
+    check(evaluation, Evaluations.schema);
 
     Evaluations.insert(evaluation);
 
