@@ -17,6 +17,7 @@ Meteor.startup(function() {
   if (Singleton.find().count() === 0) {
     Singleton.insert({
       evaluationCount: 0,
+      evaluationTermFriendlyName: "Spring 2015",
       evaluationTerm: 20145,
       version: "v1.0.0-dev"
     });
