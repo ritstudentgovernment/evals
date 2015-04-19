@@ -1,102 +1,33 @@
 <template name='evaluationNew'>
   <div class="page container">
     <div class="panel panel-body panel-default">
-      <form>
-        <div class="col-md-12">
-          <h3><small>Reviewing <a href="{{pathFor 'instructorShow' name=section.instructor}}">{{section.instructor}}'s</a></small><br><a href="{{pathFor 'courseShow' courseParentNum=section.courseParentNum }}">{{ section.title }} ({{section.courseParentNum}})</a></h3>
+      <p><h3 class="no-margin"><small>Reviewing <a href="{{pathFor 'instructorShow' name=section.instructor}}">{{section.instructor}}'s</a></small><br><a href="{{pathFor 'courseShow' courseParentNum=section.courseParentNum }}">{{ section.title }} ({{section.courseParentNum}})</a></h3></p>
+      {{ #autoForm schema=evaluationsSchema id="insertEvaluationForm" type="method" meteormethod="submitEvaluation" }}
+        <p class="footer-subtitle">Instructor Questions</p>
+        {{ >afQuickField name="helpfulness" label-class="h4 slider-label" }}
+        {{ >afQuickField name="organization" label-class="h4 slider-label" }}
+        {{ >afQuickField name="clarity" label-class="h4 slider-label" }}
+        {{ >afQuickField name="positivity" label-class="h4 slider-label" }}
+        {{ >afQuickField name="responsiveness" label-class="h4 slider-label" }}
+        {{ >afQuickField name="supportiveness" label-class="h4 slider-label" }}
+        {{ >afQuickField name="effectiveness" label-class="h4 slider-label" }}
+        {{ >afQuickField name="instructorComments" label-class="h4 p" rows=5 }}
+        <hr>
+        <span class="footer-subtitle">Course Questions</span>
+        {{ >afQuickField name="attendance" label-class="h4 p" type="boolean-select" trueLabel="Yes" falseLabel="No" }}
+        <label class="h4 p control-label">Select any of the tags that describe this course.</label>
+        {{ >afQuickField name="expensive" class="form-inline" template="tag" }}
+        {{ >afQuickField name="enrollment" class="form-inline" template="tag" }}
+        {{ >afQuickField name="textbook" class="form-inline" template="tag" }}
+        {{ >afQuickField name="textbookOld" class="form-inline" template="tag" }}
+        {{ >afQuickField name="highValue" class="form-inline" template="tag" }}
+        {{ >afQuickField name="recommendCourse" class="form-inline" template="tag" }}
+        {{ >afQuickField name="groupWork" class="form-inline" template="tag" }}
+        {{ >afQuickField name="courseComments" label-class="h4 p" rows=5 }}
+        <div>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <div class="col-md-12">
-          <span class="footer-subtitle">Professor Questions</span>
-        </div>
-        <div class="col-md-12">
-          <p><h4>How helpful was the professor?</h4></p>
-          <p><input name="helpfulness" type="number"></p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>How clear was the professor, in lectures and instructions for assignments?</h4></p>
-          <p><input name="clarity" type="number"></p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>How fair was the professor in grading assignments?</h4></p>
-          <p><input name="fairness" type="number"></p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>How responsive was the professor in returning graded work, e-mails, etc.?</h4></p>
-          <p><input name="responsiveness" type="number"></p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>Would you take another course with this professor?</h4></p>
-          <p>
-            {{>radioButtons name="retakeInstructor"}}
-          </p>
-        </div>
-        <div class="col-md-12">
-          {{>comments name="instructorComments" type="professor"}}
-        </div>
-
-        <div class="col-md-12">
-          <span class="footer-subtitle">Course Questions</span>
-        </div>
-        <div class="col-md-12">
-          <p><h4>Was attendance mandatory for this course?</h4></p>
-          <p>
-            {{>radioButtons name="attendance"}}
-          </p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>Was the textbook mandatory for this course?</h4></p>
-          <p>
-            {{>radioButtons name="textbook"}}
-          </p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>Was an older or international version of the textbook OK for this course?</h4></p>
-          <p>
-            {{>radioButtons name="oldTextbook"}}
-          </p>
-        </div>
-        <div class="col-md-12">
-          <p><h4>Would you recommend this course to another student?</h4></p>
-          <p>
-            {{>radioButtons name="retakeCourse"}}
-          </p>
-        </div>
-        <div class="col-md-12">
-          {{>comments name="courseComments" type="course"}}
-        </div>
-        <div class="col-md-12">
-          <p><input type="submit" class="btn btn-lg btn-primary" value="Submit"></p>
-        </div>
-      </form>
-    </div>
+      {{ /autoForm }}
   </div>
-</template>
-
-<template name="radioButtons">
-  <div class="btn-group" name="{{name}}" data-toggle="buttons">
-    <label class="btn btn-default active hidden">
-      <input type="radio" value="null">
-    </label>
-    <label class="btn btn-default">
-      <input type="radio" value="true"> Yes
-    </label>
-    <label class="btn btn-default">
-      <input type="radio" value="false"> No
-    </label>
-    <label class="btn btn-default active">
-      <input type="radio" value="null"> Unsure
-    </label>
   </div>
-</template>
-
-<template name="comments">
-  <p><h4 data-toggle="tooltip" data-placement="top" data-original-title="This feedback is visible to anyone that has completed 2 reviews. Leave no personally identifiable information in your comments. See our guidelines for more information.">Do you have any other comments on this {{type}}? <div class="glyphicon glyphicon-question-sign" style="zoom: 75%; padding-left: 5px;"></div></h4></p>
-    <p>
-      <textarea name="{{name}}"
-                class="form-group form-control input-lg"
-                maxlength="300"
-                placeholder="300 characters maximum. Leave no personally identifiable information in comments."
-                type="text"
-                rows="3"></textarea>
-    </p>
 </template>

@@ -1,5 +1,14 @@
 @import "variables.import.less";
 
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: none;
+}
+
 .evaluation-complete:before {
   content: '';
   position: absolute;
