@@ -10,10 +10,11 @@
                 {{ >instructorComment }}
                 {{ >courseComment }}
               {{/each}}
-            {{else}}
-              {{#unless moreReviewsNeeded}}
+            {{/if}}
+            {{#if noComments}}
+              {{#if currentUser}}
                 There are no reviews to show.
-              {{/unless}}
+              {{/if}}
             {{/if}}
           </div>
         </div>
@@ -36,25 +37,29 @@
 
 <template name="comment">
   <div class="review">
-    <div class="col-xs-2 review-col">
-      <div class="text-center">
-        <div class="glyphicon glyphicon-chevron-up upvote {{ upvoteClass }}" style="left: 2px;"></div>
-        <br>
-        <h3 class="no-margin no-padding" style="padding-bottom: 2px;">{{ score }}</h3>
-        <div class="glyphicon glyphicon-chevron-down downvote {{ downvoteClass }}" style="left: -1px;"></div>
+    <div class="row">
+      <div class="col-xs-2 review-col">
+        <div class="text-center">
+          <div class="glyphicon glyphicon-chevron-up upvote {{ upvoteClass }}" style="left: 2px;"></div>
+          <br>
+          <h3 class="no-margin no-padding" style="padding-bottom: 2px;">{{ score }}</h3>
+          <div class="glyphicon glyphicon-chevron-down downvote {{ downvoteClass }}" style="left: -1px;"></div>
+        </div>
+      </div>
+      <div class="col-xs-10 review-col">
+        {{ breaklines comment }}
+        {{#if isInRole 'admin'}}
+          <div class="pull-right comment-hidden">
+            {{ #if hidden }}
+              <span class="glyphicon glyphicon-lock"></span>
+            {{ /if }}
+          </div>
+        {{/if}}
       </div>
     </div>
-    <div class="col-xs-10 review-col">
-      {{ breaklines comment }}
-      {{#if isInRole 'admin'}}
-        <div class="pull-right comment-hidden">
-          {{ #if hidden }}
-            <span class="glyphicon glyphicon-lock"></span>
-          {{ /if }}
-        </div>
-      {{/if}}
-      <div class="pull-right review-report">
-        {{ commentPostedAt }} · <span class="modal-link report-comment">Report</span>
+    <div class="col-xs-12 no-padding review-report">
+      <div class="pull-right">
+        {{ votes }} {{ pluralize 'vote' votes }} · {{ commentPostedAt }} · <span class="modal-link report-comment">Report</span>
         {{ #if isInRole 'admin' }}
           · <span class="modal-link toggle-comment-visibility">{{ #if hidden }}Show{{ else }}Hide{{ /if }}</span>
         {{/if}}
