@@ -1,26 +1,58 @@
-function average (dimension) {
-  return _.average(_.pluck(Evaluations.find().fetch(), dimension));
+function average (metric) {
+  return _.average(_.pluck(Evaluations.find().fetch(), metric));
 };
 
 function prettyPrintNumber (number) {
-  return number ? number.toFixed(1) : "?";
+  return number ? number.toFixed(1) + " / 5" : "?";
 };
 
 Template.instructorShow.helpers({
-  clarity: function () {
-    return prettyPrintNumber(average('clarity'));
+  metrics: function () {
+    return [{
+      title: 'Clear',
+      value: prettyPrintNumber(average('clarity')),
+    },
+    {
+      title: 'Effective',
+      value: prettyPrintNumber(average('effectiveness')),
+    },
+    {
+      title: 'Helpful',
+      value: prettyPrintNumber(average('helpfulness')),
+    },
+    {
+      title: 'Organized',
+      value: prettyPrintNumber(average('organization')),
+    },
+    {
+      title: 'Positive',
+      value: prettyPrintNumber(average('positivity')),
+    },
+    {
+      title: 'Responsive',
+      value: prettyPrintNumber(average('responsiveness')),
+    },
+    {
+      title: 'Supportive',
+      value: prettyPrintNumber(average('supportiveness')),
+    },
+    {
+      title: 'Evaluations',
+      value: Evaluations.find().count(),
+    }]
   },
-  helpfulness: function () {
-    return prettyPrintNumber(average('helpfulness'));
-  },
-  responsiveness: function () {
-    return prettyPrintNumber(average('responsiveness'));
-  },
-  fairness: function () {
-    return prettyPrintNumber(average('fairness'));
-  },
-  cumulative: function () {
-    return prettyPrintNumber((average('clarity') + average('helpfulness') + average('responsiveness') + average('fairness')) / 4);
+  primaryMetric: function () {
+    return {
+      title: "Cumulative",
+      value: prettyPrintNumber((
+        average('clarity') +
+        average('effectiveness') +
+        average('helpfulness') + 
+        average('organization') + 
+        average('positivity') + 
+        average('responsiveness') + 
+        average('supportiveness')) / 7)
+    }
   },
   'sections': function () {
     var sections = Sections.find().fetch();

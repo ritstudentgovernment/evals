@@ -87,10 +87,14 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
     if (Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
       return Evaluations.find({courseParentNum: courseParentNum}, {
         fields: {
-          "helpfulness": 1,
-          "clarity": 1,
-          "fairness": 1,
-          "responsiveness": 1,
+          "attendance": 1,
+          "enrollment": 1,
+          "expensive": 1,
+          "groupWork": 1,
+          "highValue": 1,
+          "recommendCourse": 1,
+          "textbook": 1,
+          "textbookOld": 1,
           "courseComments": 1,
           "courseCommentsUpvotes": 1,
           "courseCommentsDownvotes": 1,

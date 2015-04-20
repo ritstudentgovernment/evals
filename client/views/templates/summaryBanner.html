@@ -1,35 +1,67 @@
 <template name="summaryBanner">
-  <div class="panel panel-default">
-    <div class="row hidden-xs hidden-sm">
-      <div class="col-md-3">
-        <div class="text-center summary-banner-score-box">
-          <div class="v-center"> <span class="summary-banner-score">{{sum}}</span></div>
+  <div class="panel panel-default panel-body no-padding">
+    <div class="col-sm-12">
+      <h2 style="margin-top: 10px; width: 100%;">{{ title }}</h2>
+    </div>
+  </div>
+  <div class="hidden-xs">
+    <div class="panel panel-default panel-body no-padding">
+      <div class="col-sm-4 no-padding" style="height: 200px;">
+        <div style="background-color: #F36E21; color: #fff; height: 100%;">
+          <h4 class="no-margin text-center" style="position: absolute; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ primaryMetric.title }}</h4>
+          <h1 class="no-margin text-center v-center"><b>{{ primaryMetric.value }}</b></h1>
         </div>
       </div>
-      <div class="col-md-9">
-        <div><h1>{{title}}</h1></div>
-        <div><h5 style="color:#F36E21">{{#if groups}}{{groups}} | {{/if}}{{evaluationCount}} {{pluralize "Evaluation" evaluationCount}}</h5></div>
-        <div class="row hidden-sm">
-          <div class="col-md-6"><span class="summary-category">Helpfulness: {{helpful}} / 5</span></div>
-          <div class="col-md-6"><span class="summary-category">Fairness: {{fair}} / 5</span></div>
-          <div class="col-md-6"><span class="summary-category">Clarity: {{clear}} / 5</span></div>
-          <div class="col-md-6"><span class="summary-category">Responsiveness: {{responsive}} / 5</span></div>
+      <div class="col-sm-2 no-padding" style="height: 200px;">
+        <div class="" style="height: 50%; background-color: #333; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[0].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[0].value }}</h3>
+        </div>
+        <div class="" style="height: 50%; background-color: #4d4d4d; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[1].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[1].value }}</h3>
+        </div>
+      </div>
+      <div class="col-sm-2 no-padding" style="height: 200px;">
+        <div class="" style="height: 50%; background-color: #4d4d4d; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[2].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[2].value }}</h3>
+        </div>
+        <div class="" style="height: 50%; background-color: #333; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[3].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[3].value }}</h3>
+        </div>
+      </div>
+      <div class="col-sm-2 no-padding" style="height: 200px;">
+        <div class="" style="height: 50%; background-color: #333; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[4].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[4].value }}</h3>
+        </div>
+        <div class="" style="height: 50%; background-color: #4d4d4d; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[5].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[5].value }}</h3>
+        </div>
+      </div>
+      <div class="col-sm-2 no-padding" style="height: 200px;">
+        <div class="" style="height: 50%; background-color: #4d4d4d; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[6].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[6].value }}</h3>
+        </div>
+        <div class="" style="height: 50%; background-color: #333; color: #fff;">
+          <h5 class="no-margin text-center" style="position: relative; top: 5px; width: 100%; font-weight: 900; text-transform: uppercase; max-height: 1.1em;">{{ metrics.[7].title }}</h5>
+          <h3 class="no-margin text-center v-center" style="transform: translateY(-100%);">{{ metrics.[7].value }}</h3>
         </div>
       </div>
     </div>
-    <div class="visible-xs-block visible-sm-block">
-      <div class="panel-heading text-center">
-        <h3 class="no-margin">{{title}}</h3>
-      </div>
-      <table class="table">
-        <tbody>
-        <tr class="info"><td class="text-center">Overall</td><td>{{sum}} / 5</td></tr>
-        <tr><td class="text-center">Helpfulness</td><td>{{helpful}} / 5</td></tr>
-        <tr><td class="text-center">Fairness</td><td>{{fair}} / 5</td></tr>
-        <tr><td class="text-center">Clarity</td><td>{{clear}} / 5</td></tr>
-        <tr><td class="text-center">Responsiveness</td><td>{{responsive}} / 5</td></tr>
-        </tbody>
-      </table>
-    </div>
+  </div>
+  <div class="visible-xs-block">
+    <table class="table">
+      <tbody>
+        <tr><td class="text-center"><b>{{ primaryMetric.title }}</b></td><td><b>{{ primaryMetric.value }}</b></td></tr>
+        {{#each metrics}}
+          <tr><td class="text-center">{{ title }}</td><td>{{ value }}</td></tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 </template>
