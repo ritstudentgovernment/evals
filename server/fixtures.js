@@ -19,6 +19,8 @@ Meteor.startup(function() {
       evaluationCount: 0,
       evaluationTermFriendlyName: "Spring 2015",
       evaluationTerm: 20145,
+      nextEvaluationTermFriendlyName: "Fall 2015",
+      nextEvaluationTerm: 20151,
       version: "v1.0.0-dev"
     });
   }

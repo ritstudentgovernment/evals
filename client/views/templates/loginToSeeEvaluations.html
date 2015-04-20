@@ -3,7 +3,7 @@
     {{ #if moreReviewsNeeded }}
       {{ #if unprivilegedUser }}
         <div class="panel panel-default panel-body">
-          You only submitted {{ evaluationCountForTerm }} {{ pluralize 'evaluation' evaluationCountForTerm }} for term {{ singleton.evaluationTerm }}, but need to write 2 reviews to see evaluations.
+          You only submitted {{ evaluationCountForTerm }} {{ pluralize 'evaluation' evaluationCountForTerm }} for {{ singleton.evaluationTermFriendlyName }}, but need to write 2 reviews to see evaluations.
         </div>
       {{ /if }}
     {{ /if }}
