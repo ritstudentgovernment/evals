@@ -83,40 +83,55 @@ Meteor.publish('singleton', function () {
 });
 
 Meteor.publish('courseEvaluations', function (courseParentNum) {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
-    return Evaluations.find({courseParentNum: courseParentNum}, {
-      fields: {
-        "helpfulness": 1,
-        "clarity": 1,
-        "fairness": 1,
-        "responsiveness": 1,
-        "courseComments": 1,
-        "courseCommentsUpvotes": 1,
-        "courseCommentsDownvotes": 1,
-        "courseCommentsHidden": 1,
-        "createdAt": 1
-      }
-    });
+  if (this.userId) {
+    if (Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
+      return Evaluations.find({courseParentNum: courseParentNum}, {
+        fields: {
+          "attendance": 1,
+          "enrollment": 1,
+          "expensive": 1,
+          "groupWork": 1,
+          "highValue": 1,
+          "recommendCourse": 1,
+          "textbook": 1,
+          "textbookOld": 1,
+          "courseComments": 1,
+          "courseCommentsUpvotes": 1,
+          "courseCommentsDownvotes": 1,
+          "courseCommentsHidden": 1,
+          "createdAt": 1
+        }
+      });
+    } else {
+      this.ready();
+    }
   } else {
     this.ready();
   }
 });
 
 Meteor.publish('instructorEvaluations', function (instructorName) {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
-    return Evaluations.find({instructorName: instructorName}, {
-      fields: {
-        "helpfulness": 1,
-        "clarity": 1,
-        "fairness": 1,
-        "responsiveness": 1,
-        "instructorComments": 1,
-        "instructorCommentsUpvotes": 1,
-        "instructorCommentsDownvotes": 1,
-        "instructorCommentsHidden": 1,
-        "createdAt": 1
-      }
-    });
+  if (this.userId) {
+    if (Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
+      return Evaluations.find({instructorName: instructorName}, {
+        fields: {
+          "clarity": 1,
+          "effectiveness": 1,
+          "helpfulness": 1,
+          "organization": 1,
+          "positivity": 1,
+          "responsiveness": 1,
+          "supportiveness": 1,
+          "instructorComments": 1,
+          "instructorCommentsUpvotes": 1,
+          "instructorCommentsDownvotes": 1,
+          "instructorCommentsHidden": 1,
+          "createdAt": 1
+        }
+      });
+    } else {
+      this.ready();
+    }
   } else {
     this.ready();
   }

@@ -1,7 +1,7 @@
 <template name="courseShow">
   <div class="page container">
     {{> loginToSeeEvaluations }}
-    {{> summaryBanner title=course.title groups=course.courseParentNum clear=clarity responsive=responsiveness helpful=helpfulness fair=fairness sum=cumulative}}
+    {{> summaryBanner title=course.title primaryMetric=primaryMetric metrics=metrics }}
     <div class="row">
       <div class="col-md-4">
         {{> professorColumn instructorsCurrent=instructors}}

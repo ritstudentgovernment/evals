@@ -7,12 +7,10 @@
           <div class="panel-heading text-left">
             <div class="row">
               <div class="col-xs-8 col-md-10">
-                <h2 >{{currentUser.identity.name}}</h2>
+                <h2 class="no-margin">{{ currentUser.identity.firstName.prettyPrintName }}'s Courses</h2>
               </div>
               <div class="col-xs-4 col-md-2">
-                <h2>
-                  {{ >progressBar reviewCount=evaluationCountForTerm }}
-                </h2>
+                {{ >progressBar reviewCount=evaluationCountForTerm }}
               </div>
             </div>
           </div>
@@ -41,7 +39,7 @@
       <div class="visible-md-block visible-lg-block hidden-sm hidden-xs">
         <div class="row ">
           <div class="col-md-9">
-            <h2 class="no-margin square-padding">{{currentUser.identity.name}}'s {{ singleton.evaluationTermFriendlyName }} Courses</h2>
+            <h2 class="no-margin square-padding">{{ currentUser.identity.firstName.prettyPrintName }}'s {{ singleton.evaluationTermFriendlyName }} Courses</h2>
           </div>
           <div class="col-md-3">
             <h2 class="no-margin square-padding">

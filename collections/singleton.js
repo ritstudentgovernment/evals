@@ -23,6 +23,20 @@ Singleton.schema = new SimpleSchema({
       placeholder: "20145"
     }
   },
+  nextEvaluationTermFriendlyName: {
+    type: String,
+    label: "Next Evaluation Term Friendly Name. Used for display only. For example, enter 'Fall 2015'.",
+    autoform: {
+      placeholder: "Spring 2015"
+    }
+  },
+  nextEvaluationTerm: {
+    type: Number,
+    label: "Next Evaluation Term. Used to show next term's instructors/courses on a given course/instructor page, respectively.",
+    autoform: {
+      placeholder: "20151"
+    }
+  },
   version: {
     type: String,
     autoform: {

@@ -6,6 +6,15 @@ function evaluationScore (evaluation) {
   }
 };
 
+function evaluationTotalVotes (evaluation) {
+  if (evaluation.courseCommentsUpvotes) {
+    return evaluation.courseCommentsUpvotes.length + evaluation.courseCommentsDownvotes.length;
+  } else {
+    return evaluation.instructorCommentsUpvotes.length + evaluation.instructorCommentsDownvotes.length;
+  }
+};
+
+
 Template.reviewColumn.helpers({
   evaluations: function () {
     // Sort by a comment's score, descending, then comment creation date, descending.
@@ -29,8 +38,17 @@ Template.reviewColumn.helpers({
       }
     );
   },
-  evaluationCreatedAt: function () {
-    return new moment(this.createdAt).fromNow();
+  noComments: function () {
+    var instructorQuery = {instructorComments: {$exists: true}},
+        courseQuery = {courseComments: {$exists: true}};
+
+    if (!Roles.userIsInRole(Meteor.user(), 'admin')) {
+      instructorQuery['instructorCommentsHidden'] = false;
+      courseQuery['courseCommentsHidden'] = false;
+    }
+
+    return Evaluations.find(instructorQuery).fetch().length == 0 && 
+           Evaluations.find(courseQuery).fetch().length == 0;
   }
 });
 
@@ -65,10 +83,10 @@ Template.instructorComment.events({
 });
 
 Template.comment.helpers({
-  'commentPostedAt': function () {
-    return new moment(this.evaluation.createdAt).fromNow(true);
+  commentPostedAt: function () {
+    return new moment(this.evaluation.createdAt).fromNow();
   },
-  'upvoteClass': function () {
+  upvoteClass: function () {
     if (_.contains(this.evaluation.courseCommentsUpvotes, Meteor.userId()) || 
         _.contains(this.evaluation.instructorCommentsUpvotes, Meteor.userId())) {
       return "orange";
@@ -76,7 +94,7 @@ Template.comment.helpers({
       return "";
     }
   },
-  'downvoteClass': function () {
+  downvoteClass: function () {
     if (_.contains(this.evaluation.courseCommentsDownvotes, Meteor.userId()) || 
         _.contains(this.evaluation.instructorCommentsDownvotes, Meteor.userId())) {
       return "orange";
@@ -87,8 +105,11 @@ Template.comment.helpers({
   hidden: function () {
     return this.evaluation.instructorCommentsHidden || this.evaluation.courseCommentsHidden;
   },
-  'score': function () {
+  score: function () {
     return evaluationScore(this.evaluation);
+  },
+  votes: function () {
+    return evaluationTotalVotes(this.evaluation);
   }
 });
 
