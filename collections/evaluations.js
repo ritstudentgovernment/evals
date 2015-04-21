@@ -238,6 +238,20 @@ Evaluations.schema = new SimpleSchema({
 
 Evaluations.attachSchema(Evaluations.schema);
 
+Evaluations.moreReviewsNeeded = function (userId) {
+  if (userId) {
+    var singleton = Singleton.findOne(),
+        evaluationObj = _.find(Meteor.users.findOne({_id: userId}).evaluationCounts,
+      function (evaluationCount) {
+        return evaluationCount.term == singleton.evaluationTerm;
+      }
+    );
+    return evaluationObj ? evaluationObj.count < 2 : true;
+  } else {
+    return true;
+  }
+};
+
 Meteor.methods({
   submitEvaluation: function (payload) {
 
