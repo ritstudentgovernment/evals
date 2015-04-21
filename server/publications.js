@@ -1,13 +1,3 @@
-function moreReviewsNeeded (userId) {
-  var singleton = Singleton.findOne(),
-      evaluationObj = _.find(Meteor.users.findOne(userId).evaluationCounts,
-    function (evaluationCount) {
-      return evaluationCount.term == singleton.evaluationTerm;
-    }
-  );
-  return evaluationObj ? evaluationObj.count < 2 : true;
-};
-
 Meteor.publish('course', function (courseParentNum) {
   return Courses.find({courseParentNum: courseParentNum});
 });
@@ -23,7 +13,8 @@ Meteor.publish('instructor', function (name) {
 Meteor.publish('instructorSections', function (name) {
   return Sections.find(
     {
-      instructor: name
+      instructor: name,
+      term: {$in: [Singleton.findOne().evaluationTerm, Singleton.findOne().nextEvaluationTerm]}
     },
     {$fields: {
       title: 1,
@@ -60,7 +51,7 @@ Meteor.publish('sectionById', function (id) {
 Meteor.publish('mySections', function () {
   if (this.userId) {
     var sectionIds = Meteor.users.findOne(this.userId).sectionIds;
-    return Sections.find({_id: {$in: sectionIds}}, {limit: 100});
+    return Sections.find({_id: {$in: sectionIds}, term: Singleton.findOne().evaluationTerm});
   } else {
     this.ready();
   }
@@ -84,7 +75,7 @@ Meteor.publish('singleton', function () {
 
 Meteor.publish('courseEvaluations', function (courseParentNum) {
   if (this.userId) {
-    if (Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
+    if (Roles.userIsInRole(this.userId, 'admin') || !Evaluations.moreReviewsNeeded(this.userId)) {
       return Evaluations.find({courseParentNum: courseParentNum}, {
         fields: {
           "attendance": 1,
@@ -112,7 +103,7 @@ Meteor.publish('courseEvaluations', function (courseParentNum) {
 
 Meteor.publish('instructorEvaluations', function (instructorName) {
   if (this.userId) {
-    if (Roles.userIsInRole(this.userId, 'admin') || !moreReviewsNeeded(this.userId)) {
+    if (Roles.userIsInRole(this.userId, 'admin') || !Evaluations.moreReviewsNeeded(this.userId)) {
       return Evaluations.find({instructorName: instructorName}, {
         fields: {
           "clarity": 1,

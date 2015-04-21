@@ -1,11 +1,7 @@
 Courses = new Meteor.Collection('courses');
 
-if (Meteor.isServer) {
-  Courses._ensureIndex({courseId: 1}, {unique: 1});
-}
-
 Courses.initEasySearch(
-  [ 'courseId', 'courseParentNum', 'title'],
+  [ 'courseParentNum', 'title'],
   {
     'limit' : 75,
     'use': 'mongo-db'
@@ -17,13 +13,17 @@ Courses.attachSchema(new SimpleSchema({
     type: String
   },
   courseId: {
-    type: String
+    type: String,
+    index: true,
+    unique: true
   },
   title: {
     type: String
   },
   courseParentNum: {
-    type: String
+    type: String,
+    index: true,
+    unique: true
   },
   description: {
     type: String,
