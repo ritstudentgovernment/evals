@@ -50,7 +50,7 @@ Meteor.users.getESEmail = function (esUser) {
 // This function excludes resuscitations (e.g., section CHMG-141-02R2-s).
 Meteor.users.getSections = function (esUser) {
   var sections = [],
-      regex = /rit-section-(\d+)-(\w+-\d+-\d+)-s/;
+      regex = /rit-section-(\d+)-(\w+-\d+-\w?\d+L?\d?)-s/;
   if (esUser && esUser._source) {
     _.each(esUser._source.groups, function (group) {
       var matches = regex.exec(group);

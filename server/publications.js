@@ -16,10 +16,11 @@ Meteor.publish('instructorSections', function (name) {
       instructor: name,
       term: {$in: [Singleton.findOne().evaluationTerm, Singleton.findOne().nextEvaluationTerm]}
     },
-    {$fields: {
+    {fields: {
       title: 1,
       courseParentNum: 1,
-      instructor: 1
+      instructor: 1,
+      term: 1
     }
   });
 })
