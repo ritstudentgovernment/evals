@@ -24,21 +24,36 @@ LDAP.quickAuth = function (options) {
 };
 
 LDAP.updateAccountMetadata = function (username) {
-  var esUser = Meteor.users.getESUser(username);
-  var sectionIds = _.pluck(Meteor.users.getSections(esUser), "_id");
-  Meteor.users.update(
-    {username: username},
-    {
-      $set: {
-        identity: {
-          name: esUser['_source'] ? esUser['_source'].name : null,
-          firstName: esUser['_source'] ? esUser['_source'].firstName : null,
-          lastName: esUser['_source'] ? esUser['_source'].lastName : null
-        }
-      },
-      $addToSet: {sectionIds: {$each: sectionIds}}
-    }
-  );
+  var opts = {};
+  var bindDN = 'uid=' + username + ',ou=People,dc=rit,dc=edu';
+    var esUser = LDAP.quickClient.search(bindDN, opts, Meteor.bindEnvironment(function(err, res) {
+      assert.ifError(err);
+      res.on('searchEntry',  Meteor.bindEnvironment(function(entry) {
+        //console.log('entry: ' + JSON.stringify(entry.object));
+        Meteor.users.update(
+          {username: username},
+          {
+            $set: {
+              identity: {
+                name: entry.object.cn,
+                firstName: entry.object.givenName,
+                lastName: entry.object.sn
+              }
+            }
+          });
+      }));
+      res.on('searchReference', function(referral) {
+        //console.log('referral: ' + referral.uris.join());
+      });
+      res.on('error', function(err) {
+        console.error('error: ' + err.message);
+      });
+      res.on('end', function(result) {
+        //console.log('status: ' + result.status);
+      });
+    }));
+  //var sectionIds = _.pluck(Meteor.users.getSections(esUser), "_id");
+
 }
 
 Accounts.registerLoginHandler('ldap', function (request) {
