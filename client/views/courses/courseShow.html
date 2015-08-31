@@ -1,7 +1,7 @@
 <template name="courseShow">
   <div class="page container">
     {{> loginToSeeEvaluations }}
-    {{> summaryBanner title=course.title primaryMetric=primaryMetric metrics=metrics }}
+    {{> summaryBanner title=course.title primaryMetric=primaryMetric metrics=metrics course=course }}
     <div class="row">
       <div class="col-md-4">
         {{> professorColumn }}

@@ -6,7 +6,7 @@ Template.addCourses.events({
     }
     console.log(options.sectionID);
     Meteor.call('addCourse',options, function (result) {
-      console.log("The Result is: " + result);
+      
     });
   }
 

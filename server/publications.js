@@ -30,7 +30,7 @@ Meteor.publish('jobs', function () {
     return Jobs.find();
   } else {
     this.ready();
-  } 
+  }
 });
 
 Meteor.publish('dataFeedJobs', function () {
@@ -48,6 +48,10 @@ Meteor.publish('sections', function () {
 Meteor.publish('sectionById', function (id) {
   return Sections.find({id: id});
 });
+
+Meteor.publish('sectionByCourseId', function(id) {
+  return Sections.find({courseId: id});
+})
 
 Meteor.publish('mySections', function () {
   if (this.userId) {
