@@ -1,5 +1,4 @@
 <template name="sectionPanel">
-
         <div class="row">
           <div class="col-sm-12">
             <table class="table table-hover">
@@ -24,6 +23,6 @@
   <tr>
     <td>{{this.courseNum}}</td>
     <td><a href="/professors/{{ this.instructor }}" style="line-height: 2;"> {{ this.instructor }}</a></td>
-    <td><button  id="{{this.id}}" courseNum="{{this.courseNum}}" class="btn btn-primary btn-sm addEvalBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>
+    <td><a id="{{this.id}}" courseNum="{{this.courseNum}}" class="btn btn-primary btn-sm addEvalBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
   </tr>
 </template>

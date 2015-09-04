@@ -33,5 +33,9 @@ Meteor.methods({
 
   sectionsForCourse : function (courseParentNum, term) {
     return Sections.find({courseParentNum: courseParentNum, term: term}).fetch();
+  },
+
+  sectionsForProfessor: function(name, term){
+    return Sections.find({instructor: name, term: term}).fetch();
   }
 });

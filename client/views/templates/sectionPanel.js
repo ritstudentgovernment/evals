@@ -1,26 +1,67 @@
 Template.sectionPanel.helpers({
   sections: function () {
     var singleton = Singleton.findOne();
-    Meteor.call('sectionsForCourse',
-      this.course.courseParentNum,
-      Singleton.findOne().evaluationTerm,
-      function (err, result) {
-        Session.set('sectionsForCourse', result);
+    var parentNum = "";
+    var selectedItem = Session.get("selectedItem");
+    if(selectedItem){
+      if(selectedItem.type == "professor"){
+        Meteor.call('sectionsForProfessor',
+          selectedItem.name,
+          Singleton.findOne().evaluationTerm,
+          function (err, result) {
+            Session.set('sectionsForCourse', result);
+          }
+        );
+      }else{
+        parentNum = this.courseParentNum;
+        Meteor.call('sectionsForCourse',
+          parentNum,
+          Singleton.findOne().evaluationTerm,
+          function (err, result) {
+            Session.set('sectionsForCourse', result);
+          }
+        );
       }
-    );
+    }else{
+      if(this.course){
+        parentNum = this.course.courseParentNum;
+      }
+      Meteor.call('sectionsForCourse',
+        parentNum,
+        Singleton.findOne().evaluationTerm,
+        function (err, result) {
+          Session.set('sectionsForCourse', result);
+        }
+      );
+    }
     return Session.get('sectionsForCourse');
   },
 });
 
 Template.sectionPanel.events({
   'click .addEvalBtn': function (event, template) {
-    var sectionId = event.toElement.id;
-    var sectionNum = event.toElement.attributes.courseNum.value;
+    var sectionId = event.currentTarget.id;
+    var sectionNum = event.currentTarget.attributes.courseNum.value;
     var options = {
       sectionID: sectionNum
     }
-    Meteor.call('addCourse',options, function (result) {
-      Router.go('evaluationNew', {"sectionId": sectionId});
+    var session = Session.get('selectedItem');
+    Meteor.call('addCourse',options, function (error, result) {
+      if(error){
+
+      }else{
+        if(!result.error){
+          if(!session){
+            Router.go('evaluationNew', {"sectionId": sectionId});
+          }else{
+            $("#" + session).collapse('hide');
+            Session.set('selectedItem', undefined);
+          }
+        }else{
+          throwError(result.message);
+        }
+      }
+
     });
 
   }

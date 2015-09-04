@@ -31,7 +31,6 @@
               {{/each}}
             {{else}}
               <tr><td>No courses to evaluate.</td></tr>
-
             {{/if}}
             </tbody>
           </table>
@@ -70,13 +69,14 @@
           {{/each}}
           <div class="panel panel-body panel-default">
             {{> addCourses}}
+            {{>addCourseSearch}}
           </div>
         {{else}}
           <div class="panel panel-body panel-default">
             You don't have any courses to review.
             {{> addCourses}}
+            {{>addCourseSearch}}
           </div>
-
         {{/if}}
       </div>
     {{else}}

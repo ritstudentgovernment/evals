@@ -4,9 +4,8 @@ Template.addCourses.events({
     var options = {
       sectionID: $("#courseNum").val()
     }
-    console.log(options.sectionID);
     Meteor.call('addCourse',options, function (result) {
-      
+
     });
   }
 

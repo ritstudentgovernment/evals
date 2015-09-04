@@ -1,0 +1,59 @@
+<template name="addCourseSearch">
+  <form class="main">
+    <div class="input-group input-search">
+      {{> esInput id="search" index="sections" class="form-control input-lg input-clear" placeholder="ex: Wine & Food Pairing I, SWEN-331, John Smith" }}
+      <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title"><span class="glyphicon glyphicon-user"></span> Instructors <span class="badge pull-right"> {{session 'profCount'}}</span></div>
+          </div>
+          <table class="table table-striped">
+            <tbody>
+            {{#each session 'instructorsSearch'}}
+              <tr><td><a href="" class="professorItem" type="button"  professorId="{{this._id}}" name="{{this.name}}">{{this.name}}</a></td>
+              </tr>
+              <tr>
+                  <td colspan="1" style="padding:0!important">
+                    <div class="collapse" id="{{this._id}}">
+                        {{#if selected}}
+                          {{> sectionPanel}}
+                        {{/if}}
+                    </div>
+                  </td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title"><span class="glyphicon glyphicon-book"></span> Courses <span class="badge pull-right"> {{session 'courseCount'}}</span></div>
+          </div>
+          <table class="table table-striped">
+            <tbody>
+            {{#each session 'coursesSearch'}}
+              <tr><td>{{this.courseParentNum}}</td><td><a href="" class="searchItem" type="button"  courseId="{{this.id}}">{{this.title}}</a></td>
+              </tr>
+              <tr>
+                  <td colspan="2" style="padding:0!important">
+                    <div class="collapse" id="{{this.id}}">
+                        {{#if selected}}
+                          {{> sectionPanel}}
+                        {{/if}}
+                    </div>
+                  </td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</template>

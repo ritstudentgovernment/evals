@@ -6,11 +6,13 @@
           <h2 style="margin-top: 10px; width:100%">{{ title }}</h2>
         </div>
         <div class="col-sm-3">
+          {{#if course}}
           <button style="margin-top: 10px; margin-bottom:10px; width:100%;" type="button" data-toggle="collapse" data-target="#sectionsPanel" aria-expanded="false" aria-controls="sectionsPanel" class="btn btn-primary btn-md">Evaluate Course</button>
+          {{/if}}
         </div>
       </div>
       <div class="collapse" id="sectionsPanel">
-        {{> sectionPanel }}
+        {{> sectionPanel}}
       </div>
     </div>
   </div>
