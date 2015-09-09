@@ -40,5 +40,17 @@ Sections.attachSchema(new SimpleSchema({
   },
   term: {
     type: Number
+  },
+  day: {
+    type: String,
+    optional: true
+  },
+  start: {
+    type: String,
+    optional: true
+  },
+  end: {
+    type: String,
+    optional: true
   }
 }));

@@ -26,7 +26,9 @@ function getSections (job, callback) {
         job.fail("An error occured accessing the data feed.", {level: 'info', echo: true});
       } else {
         job.log("Course data pulled from data feed.", {level: 'info', echo: true});
+
         insertSections(job, callback, result.data);
+
       }
     }
   );
@@ -35,7 +37,74 @@ function getSections (job, callback) {
 function insertSections (job, callback, sections) {
   var term = Meteor.getStdTermCode(job.data.term);
   sections.forEach(function (section) {
+
     // Insert courses
+    var start = "";
+    var end = "";
+    var days = "";
+
+    if(section.times){
+      start = section.times[0].start;
+      end = section.times[0].end;
+      var time = "";
+      for(var i = 0; i < section.times.length; i++){
+
+        var curTime = convertTime(section.times[i].start, section.times[i].end);
+
+        var day = "";
+        switch(section.times[i].day) {
+          case '1':
+              if(days.indexOf("Mon") == -1){
+                day = "Mon";
+              }
+              break;
+          case '2':
+              if(days.indexOf("Tue") == -1){
+                day = "Tue";
+              }
+              break;
+          case '3':
+              if(days.indexOf("Wed") == -1){
+                day = "Wed";
+              }
+              break;
+          case '4':
+              if(days.indexOf("Thu") == -1){
+                day = "Thu";
+              }
+              break;
+          case '5':
+              if(days.indexOf("Fri") == -1){
+                day = "Fri";
+              }
+              break;
+          case '6':
+              if(days.indexOf("Sat") == -1){
+                day = "Sat";
+              }
+              break;
+          case '0':
+              if(days.indexOf("Sun") == -1){
+                day = "Sun";
+              }
+              break;
+        }
+        if (i != 0 && day != ""){
+          days += ", ";  
+        }else{
+          time = curTime;
+        }
+        days += day;
+        if(curTime != time){
+
+          time = curTime;
+        }
+      }
+      days += " " + time + " ";
+    }
+
+
+
     try {
       Courses.insert({
         id: section.courseId,
@@ -63,12 +132,50 @@ function insertSections (job, callback, sections) {
         online: section.online,
         type: getSectionType(section),
         instructor: section.instructor,
-        term: term
+        term: term,
+        start: start,
+        end: end,
+        day: days
       });
-    } catch (e) { }
+    } catch (e) {
+      console.log(e);
+     }
   });
   job.done("Job done.");
   callback();
+}
+
+function convertTime(totalStartMin, totalEndMin){
+    var startHour = Math.floor(totalStartMin / 60);
+    var startMin = totalStartMin % 60;
+    if(startMin == 0){
+      startMin = "00";
+    }
+    var endHour = Math.floor(totalEndMin / 60);
+    var endMin = totalEndMin % 60;
+    if(endMin == 0){
+      endMin = "00";
+    }
+    var startType = "AM";
+    var endType = "AM";
+    if (startHour >= 12) {
+        startHour = startHour - 12;
+        startType = "PM";
+    }
+    if(endHour >= 12){
+      endHour = endHour - 12;
+      endType = "PM";
+    }
+    if(startHour == 0){
+      startHour = 12;
+    }
+    if(endHour == 0){
+      endHour = 12;
+    }
+
+    var string = startHour +":" + startMin + " " + startType + " - " + endHour + ":" + endMin + " " + endType;
+    return string;
+
 }
 
 function getSectionType (section) {

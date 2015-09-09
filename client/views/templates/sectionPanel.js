@@ -5,6 +5,7 @@ Template.sectionPanel.helpers({
     var selectedItem = Session.get("selectedItem");
     if(selectedItem){
       if(selectedItem.type == "professor"){
+        console.log("Selected but pro");
         Meteor.call('sectionsForProfessor',
           selectedItem.name,
           Singleton.findOne().evaluationTerm,
@@ -13,6 +14,7 @@ Template.sectionPanel.helpers({
           }
         );
       }else{
+        console.log("Selected but not");
         parentNum = this.courseParentNum;
         Meteor.call('sectionsForCourse',
           parentNum,
@@ -23,13 +25,18 @@ Template.sectionPanel.helpers({
         );
       }
     }else{
+      console.log("Not selectedItem");
       if(this.course){
         parentNum = this.course.courseParentNum;
+      }else{
+        parentNum = this.courseParentNum;
       }
+      console.log(parentNum);
       Meteor.call('sectionsForCourse',
         parentNum,
         Singleton.findOne().evaluationTerm,
         function (err, result) {
+          console.log(result);
           Session.set('sectionsForCourse', result);
         }
       );

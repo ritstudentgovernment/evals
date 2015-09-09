@@ -30,7 +30,6 @@
               <th>Course</th>
               <th>Section #</th>
               <th>Time</th>
-              <th>Days</th>
               <th></th>
             </tr>
           </thead>
@@ -49,7 +48,9 @@
   <tr>
     <td>{{this.courseNum}}</td>
     <td><a href="/professors/{{ this.instructor }}" style="line-height: 2;"> {{ this.instructor }}</a></td>
+    <td>{{this.day}}</td>
     <td><a id="{{this.id}}" courseNum="{{this.courseNum}}" class="btn btn-primary btn-sm addEvalBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+
   </tr>
 </template>
 
@@ -57,6 +58,7 @@
   <tr>
     <td><a href="/courses/{{ this.courseId }}" style="line-height: 2;"> {{ this.title }}</a></td>
     <td>{{this.courseNum}}</td>
+    <td>{{this.day}}</td>
     <td><a id="{{this.id}}" courseNum="{{this.courseNum}}" class="btn btn-primary btn-sm addEvalBtn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
   </tr>
 </template>
