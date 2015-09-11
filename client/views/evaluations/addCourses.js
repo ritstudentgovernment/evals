@@ -4,9 +4,14 @@ Template.addCourses.events({
     var options = {
       sectionID: $("#courseNum").val()
     }
-    Meteor.call('addCourse',options, function (result) {
-
+    Meteor.call('addCourse',options, function (error, result) {
+      if(error){
+      }
+      else{
+        if(result.error){
+          throwError(result.message);
+        }
+      }
     });
   }
-
 });

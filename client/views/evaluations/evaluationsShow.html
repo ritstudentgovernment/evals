@@ -1,5 +1,4 @@
 <template name="evaluationsShow">
-
   <div class="page container">
     {{#if currentUser}}
       <div class="visible-sm-block visible-xs-block hidden-md">
@@ -67,17 +66,16 @@
               </div>
             </div>
           {{/each}}
-          <div class="panel panel-body panel-default">
-            {{> addCourses}}
-            {{>addCourseSearch}}
-          </div>
+
         {{else}}
           <div class="panel panel-body panel-default">
             You don't have any courses to review.
-            {{> addCourses}}
-            {{>addCourseSearch}}
           </div>
         {{/if}}
+      </div>
+      <div class="panel panel-body panel-default">
+        {{> addCourses}}
+        {{>addCourseSearch}}
       </div>
     {{else}}
       <div class="panel panel-body panel-default">

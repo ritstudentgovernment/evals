@@ -39,10 +39,11 @@ Template.addCourseSearch.events({
     var courseId = $(e.target).attr('courseId');
     var session = Session.get("selectedItem");
     if(session && session.id == courseId){
-      $("#" + courseId).collapse('hide');
       Session.set("selectedItem", undefined);
+      console.log("Already selected");
     }else{
       Session.set("selectedItem", {type: "course", id: courseId});
+      console.log("Course Id: " + courseId);
       $("#" + courseId).collapse('show');
     }
   },
@@ -52,7 +53,6 @@ Template.addCourseSearch.events({
     var id = $(e.target).attr('professorId');
     var session = Session.get("selectedItem");
     if(session && session.id == id){
-      $("#" + id).collapse('hide');
       Session.set("selectedItem", undefined);
     }else{
       Session.set("selectedItem", {type: "professor", id: id, name: name});
@@ -60,6 +60,7 @@ Template.addCourseSearch.events({
     }
   },
   'show.bs.collapse .collapse' : function(e){
+    console.log("Closing");
     $('.collapse.in').collapse('hide');
   }
 });
@@ -88,7 +89,6 @@ Template.addCourseSearch.helpers({
 Template.addCourseSearch.rendered = function () {
   Session.setDefault("profCount", 0);
   Session.setDefault("courseCount", 0);
-  $('#search').focus();
   $('#search').attr('autocomplete', 'off');
   $('#search').val(Session.get('query'));
 };
