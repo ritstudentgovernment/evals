@@ -5,6 +5,10 @@ OpenEvals is a web application for collecting and presenting course evaluation d
 
 In the future, a branch will be created that presents data from SmartEvals. 
 
+# Contact
+
+If your school would like to use this software, you may do so pursuant to the terms of the MIT license. The Director of Services is available to answer questions and provide background/support. Please contact him at sgsvcs@rit.edu. 
+
 Usage (Local Development)
 =========================
 
